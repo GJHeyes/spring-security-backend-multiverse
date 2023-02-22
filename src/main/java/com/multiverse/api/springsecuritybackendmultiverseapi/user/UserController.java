@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<User> editUser(UserRequest userRequest){
+    public ResponseEntity<User> editUserEmail(UserRequest userRequest){
         return userService.editUserEmail(userRequest);
     }
 }

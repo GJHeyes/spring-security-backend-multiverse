@@ -17,6 +17,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private final UserRepository userRepository;
 
+    private final UserBuilder userBuilder;
+
 
     @Override
     public ResponseEntity<List<User>> getAllUsers() {
@@ -24,9 +26,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<User> deleteUserByUsername(String email) {
+    public ResponseEntity<User> deleteUserByUsername(UserRequest userRequest) {
 
-        Optional<User> optionalUser =  userRepository.findByEmail(email);
+        Optional<User> optionalUser =  userRepository.findByEmail(userRequest.getEmail());
         User user = optionalUser.orElseGet(User::new);
         if(optionalUser.isPresent()){
             userRepository.delete(user);
@@ -45,5 +47,10 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity.ok().body(user);
         }
         return ResponseEntity.badRequest().body(user);
+    }
+
+    @Override
+    public ResponseEntity<User> addUser(UserRequest userRequest) {
+        return ResponseEntity.ok().body(userRepository.save(userBuilder.build(userRequest)));
     }
 }
