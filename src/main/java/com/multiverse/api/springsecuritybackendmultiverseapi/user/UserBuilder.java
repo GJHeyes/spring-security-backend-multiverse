@@ -13,5 +13,4 @@ public class UserBuilder {
                 .password(userRequest.getPassword())
                 .build();
     }
-
 }
