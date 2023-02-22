@@ -6,16 +6,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class UserService {
-    private final UserServiceImpl userServiceImpl;
 
-    public ResponseEntity<List<User>> getAllUsers(){
-        return userServiceImpl.getAllUsers();
-    }
+public interface UserService {
 
-    public ResponseEntity<User> deleteUserByUsername(String username){
-        return userServiceImpl.deleteUserByUsername(username);
-    }
+    public ResponseEntity<List<User>> getAllUsers();
+
+    public ResponseEntity<User> deleteUserByUsername(String username);
+
+    public ResponseEntity<User> editUserEmail(UserRequest userRequest);
 }
