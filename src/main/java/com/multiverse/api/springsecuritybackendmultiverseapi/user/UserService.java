@@ -11,9 +11,9 @@ public interface UserService {
 
     public ResponseEntity<List<User>> getAllUsers();
 
-    public ResponseEntity<User> deleteUserByUsername(UserRequest userRequest);
+    public ResponseEntity<User> deleteUserByEmail(String email);
 
-    public ResponseEntity<User> editUserEmail(UserRequest userRequest);
+    public ResponseEntity<User> editUserEmail(String email);
 
     public ResponseEntity<User> addUser(UserRequest userRequest);
 }

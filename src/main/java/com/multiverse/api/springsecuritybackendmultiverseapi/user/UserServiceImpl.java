@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -16,9 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private final UserRepository userRepository;
-
     private final UserBuilder userBuilder;
-
 
     @Override
     public ResponseEntity<List<User>> getAllUsers() {
@@ -26,11 +23,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<User> deleteUserByUsername(UserRequest userRequest) {
-
-        Optional<User> optionalUser =  userRepository.findByEmail(userRequest.getEmail());
-        User user = optionalUser.orElseGet(User::new);
-        if(optionalUser.isPresent()){
+    public ResponseEntity<User> deleteUserByEmail(String email) {
+        User user = userRepository.findByEmail(email).orElseGet(User::new);
+        if(user.getId() == null){
             userRepository.delete(user);
             return ResponseEntity.ok().body(user);
         }
@@ -39,11 +34,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseEntity<User> editUserEmail(UserRequest userRequest) {
-        Optional<User> optionalUser = userRepository.findByEmail(userRequest.getEmail());
-        User user = optionalUser.orElseGet(User::new);
-        if(optionalUser.isPresent()){
-            user.setEmail(userRequest.getEmail());
+    public ResponseEntity<User> editUserEmail(String email) {
+        User user = userRepository.findByEmail(email).orElseGet(User::new);
+        if(user.getEmail() == null){
+            user.setEmail(email);
             return ResponseEntity.ok().body(user);
         }
         return ResponseEntity.badRequest().body(user);

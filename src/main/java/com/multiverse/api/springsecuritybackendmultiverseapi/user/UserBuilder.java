@@ -1,8 +1,5 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.user;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 public class UserBuilder {
 
     public User build(UserRequest userRequest){

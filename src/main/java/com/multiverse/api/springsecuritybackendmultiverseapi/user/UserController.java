@@ -21,14 +21,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @DeleteMapping("/Delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<User> deleteUser(@RequestBody @NonNull UserRequest userRequest){
-        return userService.deleteUserByUsername(userRequest);
+        return userService.deleteUserByEmail(userRequest.getEmail());
     }
 
     @PutMapping("/edit")
     public ResponseEntity<User> editUserEmail(UserRequest userRequest){
-        return userService.editUserEmail(userRequest);
+        return userService.editUserEmail(userRequest.getEmail());
     }
 
     @PostMapping("/add")
