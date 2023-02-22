@@ -28,8 +28,8 @@ public class User {
     private Role role;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "item_user",
+    @JoinTable(name = "recipe_user",
     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"))
-    private Set<Recipe> recipeSet;
+    inverseJoinColumns = @JoinColumn(name = "recipe_id", referencedColumnName = "id"))
+    private Set<Recipe> recipes;
 }
