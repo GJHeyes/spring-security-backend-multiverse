@@ -31,5 +31,5 @@ public class User {
     @JoinTable(name = "item_user",
     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"))
-    private Set<Item> items;
+    private Set<Recipe> recipeSet;
 }
