@@ -1,7 +1,7 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.user;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
+import org.springframework.context.annotation.Bean;
 
 public class UserBuilder {
 

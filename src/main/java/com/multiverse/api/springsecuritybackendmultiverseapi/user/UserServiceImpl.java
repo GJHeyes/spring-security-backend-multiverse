@@ -17,9 +17,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private final UserRepository userRepository;
 
-    private final UserBuilder userBuilder;
-
-
     @Override
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok().body(userRepository.findAll());
@@ -51,6 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<User> addUser(UserRequest userRequest) {
+        UserBuilder userBuilder = new UserBuilder();
         return ResponseEntity.ok().body(userRepository.save(userBuilder.build(userRequest)));
     }
 }
