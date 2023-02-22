@@ -11,11 +11,10 @@ import java.util.Optional;
 
 
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     public ResponseEntity<List<User>> getAllUsers() {

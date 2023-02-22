@@ -10,11 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
-@RequiredArgsConstructor
 public class UserController {
 
     @Autowired
-    private final UserService userService;
+    private UserServiceImpl userService;
 
     @GetMapping("/getAll")
     public ResponseEntity<List<User>> getAllUsers(){
