@@ -1,5 +1,6 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.recipes;
 
+import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.impl.RecipeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import java.util.List;
 public class RecipeController {
 
     @Autowired
-    private RecipeService recipeService;
+    private RecipeServiceImpl recipeService;
 
     @GetMapping("/recipes")
     public ResponseEntity<List<Recipes>> getAllRecipes(){

@@ -1,12 +1,12 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.recipes;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.multiverse.api.springsecuritybackendmultiverseapi.user.Users;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,12 +26,9 @@ public class Recipes {
     @Column(name="category")
     private String category;
 
-
     //needs to be from the User class
     @Column(name="user")
-    private String user;
-
-
-
+    @ManyToMany(mappedBy = "recipes", fetch = FetchType.LAZY)
+    private Set<Users> users;
 
 }
