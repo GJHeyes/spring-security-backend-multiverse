@@ -1,4 +1,4 @@
-package com.multiverse.api.springsecuritybackendmultiverseapi.Role;
+package com.multiverse.api.springsecuritybackendmultiverseapi.role;
 
 import org.springframework.data.repository.CrudRepository;
 
