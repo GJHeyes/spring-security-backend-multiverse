@@ -1,16 +1,33 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.Role;
 
+import jakarta.persistence.*;
+
+import java.util.Set;
+
+@Entity
+@Table(name="role")
 public class Role {
-    private String name;
-    private String email;
-    private String password;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="role_id")
 
-    public Role(String name, String email, String password){
-        this.name = name;
-        this.email = email;
-        this.password = password;
+        private int roleId;
+        private String name;
+        private String description;
 
-    }
+
+    //every role has a name, ID and a list of users
+
+@OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private Set<User> users;
+    private Set<String> responsibilities;
+
+    //list of users and responsibilities
+
+    //ADMIN, GRUNT
 }
+
+
+
 
 
