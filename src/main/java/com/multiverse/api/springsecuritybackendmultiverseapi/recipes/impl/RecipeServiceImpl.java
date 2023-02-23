@@ -4,9 +4,11 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeRepos
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeService;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
