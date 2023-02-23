@@ -15,22 +15,22 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @GetMapping("/getAll")
+    @GetMapping()
     public ResponseEntity<List<Users>> getAllUsers(){
         return userService.getAllUsers();
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping()
     public ResponseEntity<Users> deleteUser(@RequestBody @NonNull UserRequest userRequest){
         return userService.deleteUserByUsername(userRequest);
     }
 
-    @PutMapping("/edit")
+    @PutMapping()
     public ResponseEntity<Users> editUserEmail(UserRequest userRequest){
         return userService.editUserEmail(userRequest);
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public ResponseEntity<Users> addUser(UserRequest userRequest){
         return userService.addUser(userRequest);
     }

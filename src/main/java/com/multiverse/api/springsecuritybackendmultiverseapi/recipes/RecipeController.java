@@ -15,7 +15,7 @@ public class RecipeController {
     @Autowired
     private RecipeServiceImpl recipeService;
 
-    @GetMapping("/recipes")
+    @GetMapping()
     public ResponseEntity<List<Recipes>> getAllRecipes(){
         List<Recipes> recipes = null;
         try {
@@ -28,7 +28,7 @@ public class RecipeController {
         return new ResponseEntity<List<Recipes>>(recipes, HttpStatus.OK);
     }
 
-    @GetMapping("/recipes/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Recipes> getRecipesById(@PathVariable("id") int recipeID){
         Recipes recipes = null;
         try {
@@ -41,7 +41,7 @@ public class RecipeController {
         return new ResponseEntity<Recipes>(recipes, HttpStatus.OK);
     }
 
-    @PostMapping ("/recipes")
+    @PostMapping()
     public ResponseEntity<Recipes> addRecipe(@RequestBody Recipes recipe){
        Recipes recipes = null;
         try {
@@ -53,7 +53,7 @@ public class RecipeController {
         return new ResponseEntity<Recipes>(recipes, HttpStatus.OK);
     }
 
-    @PutMapping ("/recipes/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Recipes> updateRecipe(@RequestBody Recipes recipe, @PathVariable("id") int recipeID){
         Recipes recipes = null;
         try {
@@ -69,7 +69,7 @@ public class RecipeController {
         return new ResponseEntity<Recipes>(recipes, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Recipes> addOrUpdate(@PathVariable("id") int recipeID){
         Recipes recipes = null;
         try {
