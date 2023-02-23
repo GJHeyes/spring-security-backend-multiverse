@@ -6,7 +6,7 @@ public interface RoleService {
     public List<Roles> getAllRoles();
     public Roles getUserById(int userId);
     public Roles addOrUpdateRole(Roles role);
-    public Roles deleteRole(int roleId);
+    public Roles deleteRole(int roleId) throws Exception;
 
 }
 
