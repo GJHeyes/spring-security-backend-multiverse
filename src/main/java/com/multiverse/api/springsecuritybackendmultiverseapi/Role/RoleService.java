@@ -8,6 +8,7 @@ public interface RoleService {
     public Roles addOrUpdateRole(Roles role);
     public Roles deleteRole(int roleId) throws Exception;
 
+    Roles getRoleById(int roleId);
 }
 
 //service layer
