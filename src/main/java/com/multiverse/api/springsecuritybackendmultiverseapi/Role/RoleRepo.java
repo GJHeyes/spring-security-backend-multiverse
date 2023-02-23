@@ -2,7 +2,7 @@ package com.multiverse.api.springsecuritybackendmultiverseapi.Role;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface RoleRepo extends CrudRepository<Role, Integer> {
+public interface RoleRepo extends CrudRepository<Roles, Integer> {
 }
 
 //storing the data in the database
