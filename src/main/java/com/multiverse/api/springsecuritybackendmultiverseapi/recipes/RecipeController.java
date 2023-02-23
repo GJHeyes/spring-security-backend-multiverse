@@ -53,7 +53,7 @@ public class RecipeController {
         return new ResponseEntity<Recipes>(recipes, HttpStatus.OK);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Recipes> updateRecipe(@RequestBody Recipes recipe, @PathVariable("id") int recipeID){
         Recipes recipes = null;
         try {
@@ -69,7 +69,7 @@ public class RecipeController {
         return new ResponseEntity<Recipes>(recipes, HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Recipes> addOrUpdate(@PathVariable("id") int recipeID){
         Recipes recipes = null;
         try {
