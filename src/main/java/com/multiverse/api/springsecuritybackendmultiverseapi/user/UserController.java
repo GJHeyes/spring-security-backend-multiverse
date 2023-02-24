@@ -16,22 +16,22 @@ public class UserController {
     private UserServiceImpl userService;
 
     @GetMapping()
-    public ResponseEntity<List<Users>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers(){
         return userService.getAllUsers();
     }
 
     @DeleteMapping()
-    public ResponseEntity<Users> deleteUser(@RequestBody @NonNull UserRequest userRequest){
+    public ResponseEntity<User> deleteUser(@RequestBody @NonNull UserRequest userRequest){
         return userService.deleteUserByUsername(userRequest);
     }
 
     @PutMapping()
-    public ResponseEntity<Users> editUserEmail(UserRequest userRequest){
+    public ResponseEntity<User> editUserEmail(UserRequest userRequest){
         return userService.editUserEmail(userRequest);
     }
 
     @PostMapping()
-    public ResponseEntity<Users> addUser(UserRequest userRequest){
+    public ResponseEntity<User> addUser(UserRequest userRequest){
         return userService.addUser(userRequest);
     }
 }
