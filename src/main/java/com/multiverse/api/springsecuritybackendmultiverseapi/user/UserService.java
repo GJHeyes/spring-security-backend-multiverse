@@ -9,9 +9,9 @@ public interface UserService {
 
     public ResponseEntity<List<Users>> getAllUsers();
 
-    public ResponseEntity<Users> deleteUserByUsername(UserRequest userRequest);
+    public ResponseEntity<Users> deleteUserById(UserRequest userRequest, Integer userId);
 
-    public ResponseEntity<Users> editUserEmail(UserRequest userRequest);
+    public ResponseEntity<Users> editUserEmailById(UserRequest userRequest, Integer userId);
 
     public ResponseEntity<Users> addUser(UserRequest userRequest);
 }

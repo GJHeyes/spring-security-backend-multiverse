@@ -1,6 +1,7 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.user;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipes;
+import com.multiverse.api.springsecuritybackendmultiverseapi.role.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class Users implements UserDetails {
 
     @Id
     @GeneratedValue
+    @Column(name = "user_id")
     private Integer id;
 
     private String email;
@@ -31,11 +33,13 @@ public class Users implements UserDetails {
 
     private String password;
 
-    //private Role role;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Roles role;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "recipe_user",
-    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "recipe_id", referencedColumnName = "recipe_id"))
     private Set<Recipes> recipes;
 

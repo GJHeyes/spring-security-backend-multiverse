@@ -22,9 +22,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<Users> deleteUserByUsername(UserRequest userRequest) {
+    public ResponseEntity<Users> deleteUserById(UserRequest userRequest, Integer userId) {
 
-        Optional<Users> optionalUser =  userRepository.findByEmail(userRequest.getEmail());
+        Optional<Users> optionalUser =  userRepository.findById(userId);
         Users users = optionalUser.orElseGet(Users::new);
         if(optionalUser.isPresent()){
             userRepository.delete(users);
@@ -35,14 +35,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseEntity<Users> editUserEmail(UserRequest userRequest) {
-        Optional<Users> optionalUser = userRepository.findByEmail(userRequest.getEmail());
-        Users users = optionalUser.orElseGet(Users::new);
+    public ResponseEntity<Users> editUserEmailById(UserRequest userRequest, Integer userId) {
+        Optional<Users> optionalUser = userRepository.findById(userId);
+        Users user = userRepository.findById(userId).orElseGet(Users::new);
         if(optionalUser.isPresent()){
-            users.setEmail(userRequest.getEmail());
-            return ResponseEntity.ok().body(users);
+            user.setEmail(userRequest.getEmail());
+            return ResponseEntity.ok().body(user);
         }
-        return ResponseEntity.badRequest().body(users);
+        return ResponseEntity.badRequest().body(user);
     }
 
     @Override

@@ -21,13 +21,13 @@ public class UserController {
     }
 
     @DeleteMapping()
-    public ResponseEntity<Users> deleteUser(@RequestBody @NonNull UserRequest userRequest){
-        return userService.deleteUserByUsername(userRequest);
+    public ResponseEntity<Users> deleteUser(@RequestBody @NonNull UserRequest userRequest, @PathVariable("id") Integer userId){
+        return userService.deleteUserById(userRequest, userId);
     }
 
-    @PutMapping()
-    public ResponseEntity<Users> editUserEmail(UserRequest userRequest){
-        return userService.editUserEmail(userRequest);
+    @PutMapping("/{id}")
+    public ResponseEntity<Users> editUserEmail(UserRequest userRequest, @PathVariable("id") Integer userId){
+        return userService.editUserEmailById(userRequest, userId);
     }
 
     @PostMapping()
