@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@Transactional
 public class UserInitializer implements ApplicationRunner {
     @Autowired
     private UserRepository userRepository;
@@ -23,6 +22,7 @@ public class UserInitializer implements ApplicationRunner {
     private RecipeRepository recipeRepository;
 
     @Override
+    @Transactional
     public void run(ApplicationArguments args) throws Exception {
 
         User admin = User.builder()
