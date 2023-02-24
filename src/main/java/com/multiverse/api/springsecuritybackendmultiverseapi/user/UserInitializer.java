@@ -29,7 +29,7 @@ public class UserInitializer implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        User admin = User.builder()
+        Users admin = Users.builder()
                 .email("admin")
                 .firstname("admin")
                 .lastname("admin")
@@ -49,7 +49,7 @@ public class UserInitializer implements ApplicationRunner {
         roleRepository.save(role);
         recipeRepository.save(recipe);
 
-        admin = userRepository.findByEmail(admin.getEmail()).orElseGet(User::new);
+        admin = userRepository.findById(1).orElseGet(Users::new);
 
         role = roleRepository.findById(1).orElseGet(Roles::new);
 

@@ -1,6 +1,6 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.recipes;
 
-import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
+import com.multiverse.api.springsecuritybackendmultiverseapi.user.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,6 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
 @Builder
 @Entity
@@ -32,6 +31,6 @@ public class Recipes {
     //needs to be from the User class
     @Column(name="users")
     @ManyToMany(mappedBy = "recipes", fetch = FetchType.LAZY)
-    private Set<User> users;
+    private Set<Users> users;
 
 }
