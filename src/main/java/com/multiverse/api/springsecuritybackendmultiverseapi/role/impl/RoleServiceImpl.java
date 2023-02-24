@@ -4,9 +4,11 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleRepository
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleService;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
