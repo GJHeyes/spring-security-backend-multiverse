@@ -3,8 +3,8 @@ package com.multiverse.api.springsecuritybackendmultiverseapi.user;
 
 public class UserBuilder {
 
-    public Users build(UserRequest userRequest){
-        return Users.builder()
+    public User build(UserRequest userRequest){
+        return User.builder()
                 .email(userRequest.getEmail())
                 .firstname(userRequest.getFirstname())
                 .lastname(userRequest.getLastname())

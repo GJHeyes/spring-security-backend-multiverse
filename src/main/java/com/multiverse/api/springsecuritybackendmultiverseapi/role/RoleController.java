@@ -1,6 +1,5 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.role;
 
-import com.multiverse.api.springsecuritybackendmultiverseapi.role.Roles;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.impl.RoleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +15,8 @@ public class RoleController {
     private RoleServiceImpl roleService;
 
     @GetMapping()
-    public ResponseEntity<List<Roles>> getAllRoles(){
-        List<Roles> roles = null;
+    public ResponseEntity<List<Role>> getAllRoles(){
+        List<Role> roles = null;
         try{
             roles = roleService.getAllRoles();
 
@@ -28,15 +27,15 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Roles> getRolesById(@PathVariable("id") int roleId){
-        Roles roles = null;
+    public ResponseEntity<Role> getRolesById(@PathVariable("id") int roleId){
+        Role role = null;
         try{
-            roles = roleService.getRoleById(roleId);
+            role = roleService.getRoleById(roleId);
 
         }catch(Exception ex){
             ex.getMessage();
         }
-        return new ResponseEntity<>(roles,HttpStatus.OK);
+        return new ResponseEntity<>(role,HttpStatus.OK);
     }
 
 //    @PostMapping()
@@ -53,14 +52,14 @@ public class RoleController {
 //    }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Roles> addOrUpdate(@PathVariable ("id") int roleId){
-        Roles roles = null;
+    public ResponseEntity<Role> addOrUpdate(@PathVariable ("id") int roleId){
+        Role role = null;
         try{
-            roles = roleService.deleteRole(roleId);
+            role = roleService.deleteRole(roleId);
 
         }catch(Exception ex){
             ex.getMessage();
         }
-        return new ResponseEntity<>(roles, HttpStatus.OK);
+        return new ResponseEntity<>(role, HttpStatus.OK);
     }
 }

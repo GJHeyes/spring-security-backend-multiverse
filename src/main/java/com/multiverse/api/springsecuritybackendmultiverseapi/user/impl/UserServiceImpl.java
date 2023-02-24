@@ -17,27 +17,27 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public ResponseEntity<List<Users>> getAllUsers() {
+    public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok().body(userRepository.findAll());
     }
 
     @Override
-    public ResponseEntity<Users> deleteUserById(UserRequest userRequest, Integer userId) {
+    public ResponseEntity<User> deleteUserById(UserRequest userRequest, Integer userId) {
 
-        Optional<Users> optionalUser =  userRepository.findById(userId);
-        Users users = optionalUser.orElseGet(Users::new);
+        Optional<User> optionalUser =  userRepository.findById(userId);
+        User user = optionalUser.orElseGet(User::new);
         if(optionalUser.isPresent()){
-            userRepository.delete(users);
-            return ResponseEntity.ok().body(users);
+            userRepository.delete(user);
+            return ResponseEntity.ok().body(user);
         }
-        return ResponseEntity.badRequest().body(users);
+        return ResponseEntity.badRequest().body(user);
     }
 
     @Override
     @Transactional
-    public ResponseEntity<Users> editUserEmailById(UserRequest userRequest, Integer userId) {
-        Optional<Users> optionalUser = userRepository.findById(userId);
-        Users user = userRepository.findById(userId).orElseGet(Users::new);
+    public ResponseEntity<User> editUserEmailById(UserRequest userRequest, Integer userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        User user = userRepository.findById(userId).orElseGet(User::new);
         if(optionalUser.isPresent()){
             user.setEmail(userRequest.getEmail());
             return ResponseEntity.ok().body(user);
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<Users> addUser(UserRequest userRequest) {
+    public ResponseEntity<User> addUser(UserRequest userRequest) {
         UserBuilder userBuilder = new UserBuilder();
         return ResponseEntity.ok().body(userRepository.save(userBuilder.build(userRequest)));
     }

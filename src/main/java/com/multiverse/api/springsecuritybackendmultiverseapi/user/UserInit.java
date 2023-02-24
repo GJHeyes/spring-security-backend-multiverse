@@ -1,9 +1,9 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.user;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeRepository;
-import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipes;
+import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipe;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleRepository;
-import com.multiverse.api.springsecuritybackendmultiverseapi.role.Roles;
+import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -24,19 +24,19 @@ public class UserInit implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Users admin = Users.builder()
+        User admin = User.builder()
                 .email("admin")
                 .firstname("admin")
                 .lastname("admin")
                 .password("admin")
                 .build();
 
-        Roles role = Roles.builder()
+        Role role = Role.builder()
                 .name("ADMIN")
                 .description("ADMIN")
                 .build();
 
-        Recipes recipe = Recipes.builder()
+        Recipe recipe = Recipe.builder()
                 .title("test")
                 .build();
 
@@ -44,9 +44,9 @@ public class UserInit implements ApplicationRunner {
         roleRepository.save(role);
         recipeRepository.save(recipe);
 
-        admin = userRepository.findByEmail(admin.getEmail()).orElseGet(Users::new);
+        admin = userRepository.findByEmail(admin.getEmail()).orElseGet(User::new);
 
-        role = roleRepository.findById(1).orElseGet(Roles::new);
+        role = roleRepository.findById(1).orElseGet(Role::new);
 
         admin.setRole(role);
 

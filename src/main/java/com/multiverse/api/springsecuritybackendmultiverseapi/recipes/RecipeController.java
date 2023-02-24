@@ -16,8 +16,8 @@ public class RecipeController {
     private RecipeServiceImpl recipeService;
 
     @GetMapping()
-    public ResponseEntity<List<Recipes>> getAllRecipes(){
-        List<Recipes> recipes = null;
+    public ResponseEntity<List<Recipe>> getAllRecipes(){
+        List<Recipe> recipes = null;
         try {
             recipes = recipeService.getAllRecipes();
         }
@@ -25,37 +25,37 @@ public class RecipeController {
             ex.getMessage();
         }
 
-        return new ResponseEntity<List<Recipes>>(recipes, HttpStatus.OK);
+        return new ResponseEntity<List<Recipe>>(recipes, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Recipes> getRecipesById(@PathVariable("id") int recipeID){
-        Recipes recipes = null;
+    public ResponseEntity<Recipe> getRecipesById(@PathVariable("id") int recipeID){
+        Recipe recipe = null;
         try {
-            recipes = recipeService.getRecipeById(recipeID);
+            recipe = recipeService.getRecipeById(recipeID);
         }
         catch(Exception ex) {
             ex.getMessage();
         }
 
-        return new ResponseEntity<Recipes>(recipes, HttpStatus.OK);
+        return new ResponseEntity<Recipe>(recipe, HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<Recipes> addRecipe(@RequestBody Recipes recipe){
-       Recipes recipes = null;
+    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe){
+       Recipe recipes = null;
         try {
             recipes = recipeService.addRecipe(recipe);
         }
         catch(Exception ex) {
             ex.getMessage();
         }
-        return new ResponseEntity<Recipes>(recipes, HttpStatus.OK);
+        return new ResponseEntity<Recipe>(recipes, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Recipes> updateRecipe(@RequestBody Recipes recipe, @PathVariable("id") int recipeID){
-            Recipes recipeRequest = recipeService.getRecipeById(recipeID);
+    public ResponseEntity<Recipe> updateRecipe(@RequestBody Recipe recipe, @PathVariable("id") int recipeID){
+            Recipe recipeRequest = recipeService.getRecipeById(recipeID);
             if (recipeRequest != null) {
                 return ResponseEntity.ok().body (recipeService.updateRecipe(recipe, recipeID));
             }
@@ -63,14 +63,14 @@ public class RecipeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Recipes> addOrUpdate(@PathVariable("id") int recipeID){
-        Recipes recipes = null;
+    public ResponseEntity<Recipe> addOrUpdate(@PathVariable("id") int recipeID){
+        Recipe recipe = null;
         try {
-            recipes = recipeService.deleteRecipe(recipeID);
+            recipe = recipeService.deleteRecipe(recipeID);
         }
         catch(Exception ex) {
             ex.getMessage();
         }
-        return new ResponseEntity<Recipes>(recipes, HttpStatus.OK);
+        return new ResponseEntity<Recipe>(recipe, HttpStatus.OK);
     }
 }

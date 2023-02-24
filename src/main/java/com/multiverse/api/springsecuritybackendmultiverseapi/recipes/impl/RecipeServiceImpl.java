@@ -2,7 +2,7 @@ package com.multiverse.api.springsecuritybackendmultiverseapi.recipes.impl;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeService;
-import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipes;
+import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,33 +16,33 @@ public class RecipeServiceImpl implements RecipeService {
     private RecipeRepository recipeRepository;
 
     @Override
-    public List<Recipes> getAllRecipes() {
-        return (List<Recipes>) recipeRepository.findAll();
+    public List<Recipe> getAllRecipes() {
+        return (List<Recipe>) recipeRepository.findAll();
     }
 
     @Override
-    public Recipes getRecipeById(int recipeID){
+    public Recipe getRecipeById(int recipeID){
 
         return recipeRepository.findById(recipeID).orElse(null);
     }
 
     @Override
-    public Recipes addRecipe(Recipes recipe) {
+    public Recipe addRecipe(Recipe recipe) {
 
         return recipeRepository.save(recipe);
     }
 
     @Override
     @Transactional
-    public Recipes updateRecipe(Recipes recipe, int recipeID) {
-        Recipes recipeRequest = recipeRepository.findById(recipeID).orElseGet(Recipes::new);
+    public Recipe updateRecipe(Recipe recipe, int recipeID) {
+        Recipe recipeRequest = recipeRepository.findById(recipeID).orElseGet(Recipe::new);
         recipeRequest.setTitle(recipe.getTitle());
         return recipeRequest;
     }
 
     @Override
-    public Recipes deleteRecipe(int recipeID) throws Exception {
-        Recipes deletedRecipe = null;
+    public Recipe deleteRecipe(int recipeID) throws Exception {
+        Recipe deletedRecipe = null;
         try {
             deletedRecipe = recipeRepository.findById(recipeID).orElse(null);
             if(deletedRecipe == null) {

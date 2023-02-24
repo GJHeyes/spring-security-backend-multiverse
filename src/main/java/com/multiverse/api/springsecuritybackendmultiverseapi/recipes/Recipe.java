@@ -1,6 +1,6 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.recipes;
 
-import com.multiverse.api.springsecuritybackendmultiverseapi.user.Users;
+import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 @Builder
 @Entity
-public class Recipes {
+public class Recipe {
 
     @Id
     @GeneratedValue
@@ -31,6 +31,6 @@ public class Recipes {
     //needs to be from the User class
     @Column(name="users")
     @ManyToMany(mappedBy = "recipes", fetch = FetchType.LAZY)
-    private Set<Users> users;
+    private Set<User> users;
 
 }

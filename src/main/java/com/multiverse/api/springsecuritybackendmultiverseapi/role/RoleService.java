@@ -3,11 +3,11 @@ package com.multiverse.api.springsecuritybackendmultiverseapi.role;
 import java.util.List;
 
 public interface RoleService {
-    public List<Roles> getAllRoles();
-    public Roles getRoleById(int roleId);
-    public Roles addRole(Roles role);
-    public Roles updateRole(Roles role);
-    public Roles deleteRole(int roleId) throws Exception;
+    public List<Role> getAllRoles();
+    public Role getRoleById(int roleId);
+    public Role addRole(Role role);
+    public Role updateRole(Role role);
+    public Role deleteRole(int roleId) throws Exception;
 
 }
 

@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface UserService {
 
-    public ResponseEntity<List<Users>> getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers();
 
-    public ResponseEntity<Users> deleteUserById(UserRequest userRequest, Integer userId);
+    public ResponseEntity<User> deleteUserById(UserRequest userRequest, Integer userId);
 
-    public ResponseEntity<Users> editUserEmailById(UserRequest userRequest, Integer userId);
+    public ResponseEntity<User> editUserEmailById(UserRequest userRequest, Integer userId);
 
-    public ResponseEntity<Users> addUser(UserRequest userRequest);
+    public ResponseEntity<User> addUser(UserRequest userRequest);
 }

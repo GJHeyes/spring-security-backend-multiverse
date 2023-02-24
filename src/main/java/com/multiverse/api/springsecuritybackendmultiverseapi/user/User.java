@@ -1,7 +1,7 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.user;
 
-import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipes;
-import com.multiverse.api.springsecuritybackendmultiverseapi.role.Roles;
+import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipe;
+import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Users implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -35,13 +35,13 @@ public class Users implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Roles role;
+    private Role role;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "recipe_user",
     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "recipe_id", referencedColumnName = "recipe_id"))
-    private Set<Recipes> recipes;
+    private Set<Recipe> recipes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

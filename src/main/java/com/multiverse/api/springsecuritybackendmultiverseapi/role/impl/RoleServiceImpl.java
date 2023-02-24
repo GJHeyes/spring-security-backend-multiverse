@@ -2,7 +2,7 @@ package com.multiverse.api.springsecuritybackendmultiverseapi.role.impl;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleService;
-import com.multiverse.api.springsecuritybackendmultiverseapi.role.Roles;
+import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,27 +14,27 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
     @Override
-    public List<Roles> getAllRoles() {
-        return (List<Roles>) roleRepository.findAll();
+    public List<Role> getAllRoles() {
+        return (List<Role>) roleRepository.findAll();
     }
     @Override
-    public Roles getRoleById(int roleId) {
+    public Role getRoleById(int roleId) {
         return roleRepository.findById(roleId).orElse(null);
 
     }
 
     @Override
-    public Roles addRole(Roles role) {
+    public Role addRole(Role role) {
         return null;
     }
 
     @Override
-    public Roles updateRole(Roles role) {
+    public Role updateRole(Role role) {
         return null;
     }
 
     @Override
-    public Roles deleteRole(int roleId) throws Exception {
+    public Role deleteRole(int roleId) throws Exception {
         return null;
     }
 }
