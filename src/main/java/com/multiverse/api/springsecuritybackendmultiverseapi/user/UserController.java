@@ -20,14 +20,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @DeleteMapping()
-    public ResponseEntity<User> deleteUser(@RequestBody @NonNull UserRequest userRequest){
-        return userService.deleteUserByUsername(userRequest);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable("id") Integer userId){
+        return userService.deleteUserById(userId);
     }
 
-    @PutMapping()
-    public ResponseEntity<User> editUserEmail(UserRequest userRequest){
-        return userService.editUserEmail(userRequest);
+    @PutMapping("/{id}")
+    public ResponseEntity<User> editUserEmail(@PathVariable("id") Integer userId, UserRequest userRequest){
+        return userService.editUserEmail(userId, userRequest);
     }
 
     @PostMapping()

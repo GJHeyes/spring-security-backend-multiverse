@@ -12,9 +12,9 @@ public interface UserService extends UserDetailsService {
 
     public ResponseEntity<List<User>> getAllUsers();
 
-    public ResponseEntity<User> deleteUserByUsername(UserRequest userRequest);
+    public ResponseEntity<User> deleteUserById(Integer userId);
 
-    public ResponseEntity<User> editUserEmail(UserRequest userRequest);
+    public ResponseEntity<User> editUserEmail(Integer userId, UserRequest userRequest);
 
     public ResponseEntity<User> addUser(UserRequest userRequest);
 
