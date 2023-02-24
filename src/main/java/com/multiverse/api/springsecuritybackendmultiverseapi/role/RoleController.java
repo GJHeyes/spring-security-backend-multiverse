@@ -39,18 +39,18 @@ public class RoleController {
         return new ResponseEntity<>(roles,HttpStatus.OK);
     }
 
-    @PostMapping()
-    public ResponseEntity<Roles> addOrUpdate(@RequestBody Roles role){
-        Roles roles = null;
-        try{
-        roles = roleService.addOrUpdateRole(role);
-
-        }catch(Exception ex){
-        ex.getMessage();
-        }
-        return new ResponseEntity<>(roles,HttpStatus.OK);
-
-    }
+//    @PostMapping()
+//    public ResponseEntity<Roles> addOrUpdate(@RequestBody Roles role){
+//        Roles roles = null;
+//        try{
+//        roles = roleService.addOrUpdateRole(role);
+//
+//        }catch(Exception ex){
+//        ex.getMessage();
+//        }
+//        return new ResponseEntity<>(roles,HttpStatus.OK);
+//
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Roles> addOrUpdate(@PathVariable ("id") int roleId){

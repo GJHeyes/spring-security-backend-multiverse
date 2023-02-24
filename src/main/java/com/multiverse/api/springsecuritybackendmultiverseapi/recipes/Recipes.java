@@ -13,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Data
+@Builder
 @Entity
 public class Recipes {
 
@@ -29,7 +30,7 @@ public class Recipes {
     private String category;
 
     //needs to be from the User class
-    @Column(name="user")
+    @Column(name="users")
     @ManyToMany(mappedBy = "recipes", fetch = FetchType.LAZY)
     private Set<User> users;
 
