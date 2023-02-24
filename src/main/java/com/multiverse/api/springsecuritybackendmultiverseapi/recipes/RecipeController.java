@@ -55,18 +55,11 @@ public class RecipeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Recipes> updateRecipe(@RequestBody Recipes recipe, @PathVariable("id") int recipeID){
-        Recipes recipes = null;
-        try {
-            recipes = recipeService.getRecipeById(recipeID);
-            if (recipes != null) {
-                recipes = recipeService.updateRecipe(recipe);
+            Recipes recipeRequest = recipeService.getRecipeById(recipeID);
+            if (recipeRequest != null) {
+                return ResponseEntity.ok().body (recipeService.updateRecipe(recipe, recipeID));
             }
-            recipes = recipeService.updateRecipe(recipe);
-        }
-        catch(Exception ex) {
-            ex.getMessage();
-        }
-        return new ResponseEntity<Recipes>(recipes, HttpStatus.OK);
+            return ResponseEntity.badRequest().body(recipe);
     }
 
     @DeleteMapping("/{id}")

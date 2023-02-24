@@ -5,6 +5,7 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeServi
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,8 +33,11 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipes updateRecipe(Recipes recipe) {
-        return recipeRepository.save(recipe);
+    @Transactional
+    public Recipes updateRecipe(Recipes recipe, int recipeID) {
+        Recipes recipeRequest = recipeRepository.findById(recipeID).orElseGet(Recipes::new);
+        recipeRequest.setTitle(recipe.getTitle());
+        return recipeRequest;
     }
 
     @Override
