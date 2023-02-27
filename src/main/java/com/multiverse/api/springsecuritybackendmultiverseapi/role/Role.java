@@ -28,7 +28,7 @@ public class Role {
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     private Set<User> users;
-    private Set<String> responsibilities;
+    private String responsibilities;
 
     //list of users and responsibilities
 

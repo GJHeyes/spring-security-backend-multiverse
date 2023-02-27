@@ -10,6 +10,10 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Component
 public class UserInitializer implements ApplicationRunner {
     @Autowired
@@ -29,27 +33,37 @@ public class UserInitializer implements ApplicationRunner {
                 .email("admin")
                 .firstname("admin")
                 .lastname("admin")
-                .password("admin")
+                .password("$2a$10$j3EhVEMgUilPCJ5vW1cbruKe34rbH7Ib.ps.fyZuhjKEUqm0HoZAO")
+                .recipes(new HashSet<>())
                 .build();
 
-        Role role = Role.builder()
+        Role adminRole = Role.builder()
                 .name("ADMIN")
                 .description("ADMIN")
+                .responsibilities("Able to access all data")
+                .build();
+
+        Role gruntRole = Role.builder()
+                .name("GRUNT")
+                .description("GRUNT")
+                .responsibilities("Able to access their own data")
                 .build();
 
         Recipe recipe = Recipe.builder()
                         .title("test")
                         .build();
 
+        admin.getRecipes().add(recipe);
+
         userRepository.save(admin);
-        roleRepository.save(role);
+        roleRepository.save(adminRole);
         recipeRepository.save(recipe);
 
         admin = userRepository.findById(1).orElseGet(User::new);
 
-        role = roleRepository.findById(1).orElseGet(Role::new);
+        adminRole = roleRepository.findById(1).orElseGet(Role::new);
 
-        admin.setRole(role);
+        admin.setRole(adminRole);
 
     }
 }
