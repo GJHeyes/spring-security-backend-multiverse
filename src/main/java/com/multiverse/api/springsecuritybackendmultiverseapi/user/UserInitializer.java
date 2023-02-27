@@ -57,6 +57,7 @@ public class UserInitializer implements ApplicationRunner {
 
         userRepository.save(admin);
         roleRepository.save(adminRole);
+        roleRepository.save(gruntRole);
         recipeRepository.save(recipe);
 
         admin = userRepository.findById(1).orElseGet(User::new);
