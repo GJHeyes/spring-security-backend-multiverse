@@ -38,19 +38,6 @@ public class RoleController {
         return new ResponseEntity<>(role,HttpStatus.OK);
     }
 
-//    @PostMapping()
-//    public ResponseEntity<Roles> addOrUpdate(@RequestBody Roles role){
-//        Roles roles = null;
-//        try{
-//        roles = roleService.addOrUpdateRole(role);
-//
-//        }catch(Exception ex){
-//        ex.getMessage();
-//        }
-//        return new ResponseEntity<>(roles,HttpStatus.OK);
-//
-//    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Role> deleteRole(@PathVariable ("id") int roleId){
         Role role = null;
@@ -63,7 +50,7 @@ public class RoleController {
         return new ResponseEntity<>(role, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Role> updateRole(@RequestBody Role roleBody, @PathVariable ("id") int roleId){
         Role role = null;
         try{
