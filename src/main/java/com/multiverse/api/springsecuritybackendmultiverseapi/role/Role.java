@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Table(name="role")
@@ -31,7 +32,7 @@ public class Role {
 
     @JsonBackReference
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private Set<User> users;
+    private List<User> users;
     private String responsibilities;
 
     //list of users and responsibilities
