@@ -1,5 +1,7 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.role;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,8 @@ public class Role {
 
     //every role has a name, ID and a list of users
 
+
+    @JsonBackReference
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     private Set<User> users;
     private String responsibilities;

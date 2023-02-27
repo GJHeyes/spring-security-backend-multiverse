@@ -1,5 +1,7 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipe;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
 import jakarta.persistence.*;
@@ -33,10 +35,12 @@ public class User implements UserDetails {
 
     private String password;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "recipe_user",
     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),

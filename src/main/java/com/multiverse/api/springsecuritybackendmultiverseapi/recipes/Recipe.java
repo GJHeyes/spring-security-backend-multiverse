@@ -1,5 +1,6 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.recipes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class Recipe {
     private String category;
 
     //needs to be from the User class
+    @JsonBackReference
     @Column(name="users")
     @ManyToMany(mappedBy = "recipes", fetch = FetchType.LAZY)
     private Set<User> users;
