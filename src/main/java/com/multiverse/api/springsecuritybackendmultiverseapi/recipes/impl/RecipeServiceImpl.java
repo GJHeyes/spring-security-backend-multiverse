@@ -36,7 +36,9 @@ public class RecipeServiceImpl implements RecipeService {
     @Transactional
     public Recipe updateRecipe(Recipe recipe, int recipeID) {
         Recipe recipeRequest = recipeRepository.findById(recipeID).orElseGet(Recipe::new);
-        recipeRequest.setTitle(recipe.getTitle());
+        if(recipeRequest.getTitle() != null){
+            recipeRequest.setTitle(recipe.getTitle());
+        }
         return recipeRequest;
     }
 

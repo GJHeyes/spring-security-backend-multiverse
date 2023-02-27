@@ -52,10 +52,22 @@ public class RoleController {
 //    }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Role> addOrUpdate(@PathVariable ("id") int roleId){
+    public ResponseEntity<Role> deleteRole(@PathVariable ("id") int roleId){
         Role role = null;
         try{
             role = roleService.deleteRole(roleId);
+
+        }catch(Exception ex){
+            ex.getMessage();
+        }
+        return new ResponseEntity<>(role, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Role> updateRole(@RequestBody Role roleBody, @PathVariable ("id") int roleId){
+        Role role = null;
+        try{
+            role = roleService.updateRole(roleBody, roleId);
 
         }catch(Exception ex){
             ex.getMessage();
