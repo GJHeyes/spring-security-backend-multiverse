@@ -84,6 +84,11 @@ public class UserInitializer implements ApplicationRunner {
 
         admin.setRole(adminRole);
 
+        grunt = userRepository.findById(2).orElseGet(User::new);
+
+        gruntRole = roleRepository.findById(2).orElseGet(Role::new);
+
+        grunt.setRole(gruntRole);
         admin.getRecipes().add(krabbyPatty);
         admin.getRecipes().add(kelpFries);
 

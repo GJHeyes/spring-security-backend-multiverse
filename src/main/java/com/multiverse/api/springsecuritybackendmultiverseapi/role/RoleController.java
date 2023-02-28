@@ -1,6 +1,8 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.role;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.impl.RoleServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +17,17 @@ public class RoleController {
     private RoleServiceImpl roleService;
 
     @GetMapping()
-    public ResponseEntity<List<Role>> getAllRoles(){
+    public ResponseEntity<List<Role>> getAllRoles(@NonNull HttpServletRequest token){
         List<Role> roles = null;
         try{
-            roles = roleService.getAllRoles();
+            roles = roleService.getAllRoles(token);
 
         }catch(Exception ex){
             ex.getMessage();
         }
         return new ResponseEntity<>(roles,HttpStatus.OK);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Role> getRolesById(@PathVariable("id") int roleId){
