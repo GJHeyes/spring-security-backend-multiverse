@@ -70,7 +70,7 @@ public class Initializer implements ApplicationRunner {
                 .build();
 
         Recipe seaweed = Recipe.builder()
-                .title("seaweed")
+                .title("Seaweed")
                 .category("Sides")
                 .createBy("Eugene.Krabs@KrustyKrab.com")
                 .build();
@@ -82,7 +82,7 @@ public class Initializer implements ApplicationRunner {
                 .build();
 
         Recipe ketchup = Recipe.builder()
-                .title("ketchup")
+                .title("Ketchup")
                 .category("Sauces")
                 .createBy("Eugene.Krabs@KrustyKrab.com")
                 .build();
@@ -94,7 +94,7 @@ public class Initializer implements ApplicationRunner {
                 .build();
 
         Recipe mayo = Recipe.builder()
-                .title("mayo")
+                .title("Mayo")
                 .category("Sauces")
                 .createBy("Eugene.Krabs@KrustyKrab.com")
                 .build();
