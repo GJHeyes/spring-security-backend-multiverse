@@ -30,8 +30,8 @@ public class UserController {
         return userService.editUserEmailById(userRequest, userId);
     }
 
-    @PostMapping()
-    public ResponseEntity<User> addUser(UserRequest userRequest){
-        return userService.addUser(userRequest);
-    }
+//    @PostMapping()
+//    public ResponseEntity<User> addUser(UserRequest userRequest){
+//        return userService.addUser(userRequest);
+//    }
 }
