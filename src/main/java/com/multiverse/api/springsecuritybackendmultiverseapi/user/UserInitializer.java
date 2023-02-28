@@ -61,11 +61,13 @@ public class UserInitializer implements ApplicationRunner {
         Recipe krabbyPatty = Recipe.builder()
                 .title("Krabby Patty")
                 .category("Burger")
+                .createBy("Eugene.Krabs@KrustyKrab.com")
                 .build();
 
         Recipe kelpFries = Recipe.builder()
                 .title("Kelp Fries")
                 .category("Fries")
+                .createBy("Eugene.Krabs@KrustyKrab.com")
                 .build();
 
 
@@ -82,7 +84,8 @@ public class UserInitializer implements ApplicationRunner {
 
         admin.setRole(adminRole);
 
-        //admin.getRecipes().add(krabbyPatty);
+        admin.getRecipes().add(krabbyPatty);
+        admin.getRecipes().add(kelpFries);
 
     }
 }
