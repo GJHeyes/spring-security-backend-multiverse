@@ -1,8 +1,7 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.recipes.impl;
 
-import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeRepository;
-import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeService;
-import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipe;
+import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +14,9 @@ public class RecipeServiceImpl implements RecipeService {
     @Autowired
     private RecipeRepository recipeRepository;
 
+    @Autowired
+    private RecipeBuilder recipeBuilder;
+
     @Override
     public List<Recipe> getAllRecipes() {
         return (List<Recipe>) recipeRepository.findAll();
@@ -22,24 +24,22 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipeById(int recipeID){
-
         return recipeRepository.findById(recipeID).orElse(null);
     }
 
     @Override
-    public Recipe addRecipe(Recipe recipe) {
-
-        return recipeRepository.save(recipe);
+    public Recipe addRecipe(HttpServletRequest token, RecipeRequest recipeRequest) {
+        return recipeRepository.save(recipeBuilder.build(token,recipeRequest));
     }
 
     @Override
     @Transactional
-    public Recipe updateRecipe(Recipe recipe, int recipeID) {
-        Recipe recipeRequest = recipeRepository.findById(recipeID).orElseGet(Recipe::new);
-        if(recipeRequest.getTitle() != null){
-            recipeRequest.setTitle(recipe.getTitle());
+    public Recipe updateRecipe(RecipeRequest recipeRequest, int recipeID) {
+        Recipe updateRecipe = recipeRepository.findById(recipeID).orElseGet(Recipe::new);
+        if(updateRecipe.getTitle() != null){
+            updateRecipe.setTitle(recipeRequest.getTitle());
         }
-        return recipeRequest;
+        return updateRecipe;
     }
 
     @Override

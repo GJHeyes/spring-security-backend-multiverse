@@ -1,6 +1,8 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.recipes;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.impl.RecipeServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,28 +45,28 @@ public class RecipeController {
     }
 
     @PostMapping()
-    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe){
+    public ResponseEntity<Recipe> addRecipe(@NonNull HttpServletRequest token, @RequestBody  RecipeRequest recipeRequest){
        Recipe recipes = null;
         try {
-            recipes = recipeService.addRecipe(recipe);
+            recipes = recipeService.addRecipe(token, recipeRequest);
         }
         catch(Exception ex) {
             ex.getMessage();
         }
-        return new ResponseEntity<Recipe>(recipes, HttpStatus.OK);
+        return new ResponseEntity<>(recipes, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@RequestBody Recipe recipe, @PathVariable("id") int recipeID){
-            Recipe recipeRequest = recipeService.getRecipeById(recipeID);
-            if (recipeRequest != null) {
-                return ResponseEntity.ok().body (recipeService.updateRecipe(recipe, recipeID));
+    public ResponseEntity<Recipe> updateRecipe(@RequestBody RecipeRequest recipeRequest, @PathVariable("id") int recipeID){
+            Recipe optionalRequest = recipeService.getRecipeById(recipeID);
+            if (optionalRequest != null) {
+                return ResponseEntity.ok().body (recipeService.updateRecipe(recipeRequest, recipeID));
             }
-            return ResponseEntity.badRequest().body(recipe);
+            return ResponseEntity.badRequest().body(null);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Recipe> addOrUpdate(@PathVariable("id") int recipeID){
+    public ResponseEntity<Recipe> deleteRecipe(@PathVariable("id") int recipeID){
         Recipe recipe = null;
         try {
             recipe = recipeService.deleteRecipe(recipeID);
