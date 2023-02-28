@@ -31,10 +31,18 @@ public class UserInitializer implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 
         User admin = User.builder()
-                .email("admin")
-                .firstname("admin")
-                .lastname("admin")
+                .email("Eugene.Krabs@KrustyKrab.com")
+                .firstname("Eugene")
+                .lastname("Krabs")
                 .password("$2a$10$j3EhVEMgUilPCJ5vW1cbruKe34rbH7Ib.ps.fyZuhjKEUqm0HoZAO")
+                .recipes(new ArrayList<>())
+                .build();
+
+        User grunt = User.builder()
+                .email("SpongeBob.SquarePants@KrustyKrab.com")
+                .firstname("SpongeBob")
+                .lastname("SquarePants")
+                .password("$2a$10$wG60IVZTZHo17B8Wv9zsquHkknSwPrcAUQMj0XpfOv7npalMIwo52")
                 .recipes(new ArrayList<>())
                 .build();
 
@@ -45,21 +53,28 @@ public class UserInitializer implements ApplicationRunner {
                 .build();
 
         Role gruntRole = Role.builder()
-                .name("GRUNT")
-                .description("GRUNT")
+                .name("WORKER")
+                .description("WORKER")
                 .responsibilities("Able to access their own data")
                 .build();
 
-        Recipe recipe = Recipe.builder()
-                        .title("test")
-                        .build();
+        Recipe krabbyPatty = Recipe.builder()
+                .title("Krabby Patty")
+                .category("Burger")
+                .build();
 
+        Recipe kelpFries = Recipe.builder()
+                .title("Kelp Fries")
+                .category("Fries")
+                .build();
 
 
         userRepository.save(admin);
+        userRepository.save(grunt);
         roleRepository.save(adminRole);
         roleRepository.save(gruntRole);
-        recipeRepository.save(recipe);
+        recipeRepository.save(krabbyPatty);
+        recipeRepository.save(kelpFries);
 
         admin = userRepository.findById(1).orElseGet(User::new);
 
@@ -67,7 +82,7 @@ public class UserInitializer implements ApplicationRunner {
 
         admin.setRole(adminRole);
 
-        admin.getRecipes().add(recipe);
+        //admin.getRecipes().add(krabbyPatty);
 
     }
 }
