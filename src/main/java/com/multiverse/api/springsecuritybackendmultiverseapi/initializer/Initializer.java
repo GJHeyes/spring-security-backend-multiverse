@@ -1,9 +1,11 @@
-package com.multiverse.api.springsecuritybackendmultiverseapi.user;
+package com.multiverse.api.springsecuritybackendmultiverseapi.initializer;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipe;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
+import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
+import com.multiverse.api.springsecuritybackendmultiverseapi.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -11,12 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Component
-public class UserInitializer implements ApplicationRunner {
+public class Initializer implements ApplicationRunner {
     @Autowired
     private UserRepository userRepository;
 
@@ -70,6 +69,66 @@ public class UserInitializer implements ApplicationRunner {
                 .createBy("Eugene.Krabs@KrustyKrab.com")
                 .build();
 
+        Recipe seaweed = Recipe.builder()
+                .title("seaweed")
+                .category("Sides")
+                .createBy("Eugene.Krabs@KrustyKrab.com")
+                .build();
+
+        Recipe secretSauce = Recipe.builder()
+                .title("Secret Sauce")
+                .category("Sauces")
+                .createBy("SpongeBob.SquarePants@KrustyKrab.com")
+                .build();
+
+        Recipe ketchup = Recipe.builder()
+                .title("ketchup")
+                .category("Sauces")
+                .createBy("Eugene.Krabs@KrustyKrab.com")
+                .build();
+
+        Recipe beyondKrabbyPatty = Recipe.builder()
+                .title("Beyond Krabby Patty - Vegan")
+                .category("Burger")
+                .createBy("SpongeBob.SquarePants@KrustyKrab.com")
+                .build();
+
+        Recipe mayo = Recipe.builder()
+                .title("mayo")
+                .category("Sauces")
+                .createBy("Eugene.Krabs@KrustyKrab.com")
+                .build();
+
+        Recipe coralMash = Recipe.builder()
+                .title("Coral Mash")
+                .category("Sides")
+                .createBy("Eugene.Krabs@KrustyKrab.com")
+                .build();
+
+        Recipe krabbSticks = Recipe.builder()
+                .title("Krabb Sticks")
+                .category("Sides")
+                .createBy("Eugene.Krabs@KrustyKrab.com")
+                .build();
+
+        Recipe escargot = Recipe.builder()
+                .title("Escargot")
+                .category("Sides")
+                .createBy("Eugene.Krabs@KrustyKrab.com")
+                .build();
+
+        Recipe pineappleBurger = Recipe.builder()
+                .title("Pineapple Burger")
+                .category("Burger")
+                .createBy("SpongeBob.SquarePants@KrustyKrab.com")
+                .build();
+
+        Recipe pineappleFrittes = Recipe.builder()
+                .title("Pineapple Frittes")
+                .category("Fries")
+                .createBy("SpongeBob.SquarePants@KrustyKrab.com")
+                .build();
+
 
         userRepository.save(admin);
         userRepository.save(grunt);
@@ -77,6 +136,17 @@ public class UserInitializer implements ApplicationRunner {
         roleRepository.save(gruntRole);
         recipeRepository.save(krabbyPatty);
         recipeRepository.save(kelpFries);
+        recipeRepository.save(seaweed);
+        recipeRepository.save(secretSauce);
+        recipeRepository.save(ketchup);
+        recipeRepository.save(beyondKrabbyPatty);
+        recipeRepository.save(mayo);
+        recipeRepository.save(coralMash);
+        recipeRepository.save(krabbSticks);
+        recipeRepository.save(escargot);
+        recipeRepository.save(pineappleBurger);
+        recipeRepository.save(pineappleFrittes);
+
 
         admin = userRepository.findById(1).orElseGet(User::new);
 
