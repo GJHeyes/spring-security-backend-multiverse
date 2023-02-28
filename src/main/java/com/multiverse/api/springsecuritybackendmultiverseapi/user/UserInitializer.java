@@ -10,6 +10,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class UserInitializer implements ApplicationRunner {
                 .firstname("admin")
                 .lastname("admin")
                 .password("$2a$10$j3EhVEMgUilPCJ5vW1cbruKe34rbH7Ib.ps.fyZuhjKEUqm0HoZAO")
-                .recipes(new HashSet<>())
+                .recipes(new ArrayList<>())
                 .build();
 
         Role adminRole = Role.builder()
