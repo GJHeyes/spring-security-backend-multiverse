@@ -9,6 +9,8 @@ public interface UserService {
 
     public ResponseEntity<List<User>> getAllUsers();
 
+    public User getUserById(int UserID);
+
     public ResponseEntity<User> deleteUserById(UserRequest userRequest, Integer userId);
 
     public ResponseEntity<User> editUserEmailById(UserRequest userRequest, Integer userId);
