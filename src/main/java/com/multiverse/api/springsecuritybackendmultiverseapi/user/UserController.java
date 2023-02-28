@@ -1,6 +1,7 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.user;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.impl.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +17,18 @@ public class UserController {
     private UserServiceImpl userService;
 
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers(){
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers(@NonNull HttpServletRequest token){
+        return userService.getAllUsers(token);
     }
 
     @DeleteMapping()
-    public ResponseEntity<User> deleteUser(@RequestBody @NonNull UserRequest userRequest, @PathVariable("id") Integer userId){
-        return userService.deleteUserById(userRequest, userId);
+    public ResponseEntity<User> deleteUser(@NonNull HttpServletRequest token, @RequestBody @NonNull UserRequest userRequest, @PathVariable("id") Integer userId){
+        return userService.deleteUserById(token, userRequest, userId);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> editUserEmail(UserRequest userRequest, @PathVariable("id") Integer userId){
-        return userService.editUserEmailById(userRequest, userId);
+    public ResponseEntity<User> editUserEmail(@NonNull HttpServletRequest token, UserRequest userRequest, @PathVariable("id") Integer userId){
+        return userService.editUserEmailById(token, userRequest, userId);
     }
 
 //    @PostMapping()
