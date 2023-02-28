@@ -22,14 +22,12 @@ public class Recipe {
     @GeneratedValue
     @Column(name="recipe_id")
     private int recipeID;
-
     @Column(name="title")
     private String title;
-
-
     @Column(name="category")
     private String category;
-
+    @Column(name="createdBy")
+    private String createBy;
     //needs to be from the User class
     @JsonBackReference
     @Column(name="users")
