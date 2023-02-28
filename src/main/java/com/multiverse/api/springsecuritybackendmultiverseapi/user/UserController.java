@@ -4,6 +4,7 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipe;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeService;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.impl.RecipeServiceImpl;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.impl.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,8 @@ public class UserController {
     private RecipeServiceImpl recipeService;
 
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers(){
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers(@NonNull HttpServletRequest token){
+        return userService.getAllUsers(token);
     }
 
     @GetMapping("/{id}")
@@ -42,18 +43,13 @@ public class UserController {
     }
 
     @DeleteMapping()
-    public ResponseEntity<User> deleteUser(@RequestBody @NonNull UserRequest userRequest, @PathVariable("id") Integer userId){
-        return userService.deleteUserById(userRequest, userId);
+    public ResponseEntity<User> deleteUser(@NonNull HttpServletRequest token, @RequestBody @NonNull UserRequest userRequest, @PathVariable("id") Integer userId){
+        return userService.deleteUserById(token, userRequest, userId);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> editUserEmail(UserRequest userRequest, @PathVariable("id") Integer userId){
-        return userService.editUserEmailById(userRequest, userId);
-    }
-
-    @PostMapping()
-    public ResponseEntity<User> addUser(UserRequest userRequest){
-        return userService.addUser(userRequest);
+    public ResponseEntity<User> editUserEmail(@NonNull HttpServletRequest token, UserRequest userRequest, @PathVariable("id") Integer userId){
+        return userService.editUserEmailById(token, userRequest, userId);
     }
 
     @Transactional
@@ -67,6 +63,4 @@ public class UserController {
         user.getRecipes().add(recipe);
         return ResponseEntity.ok().body(user);
     }
-
-
 }
