@@ -54,7 +54,7 @@ public class UserInitializer implements ApplicationRunner {
                         .title("test")
                         .build();
 
-        admin.getRecipes().add(recipe);
+
 
         userRepository.save(admin);
         roleRepository.save(adminRole);
@@ -66,6 +66,8 @@ public class UserInitializer implements ApplicationRunner {
         adminRole = roleRepository.findById(1).orElseGet(Role::new);
 
         admin.setRole(adminRole);
+
+        admin.getRecipes().add(recipe);
 
     }
 }

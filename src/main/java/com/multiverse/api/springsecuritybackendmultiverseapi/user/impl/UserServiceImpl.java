@@ -1,6 +1,6 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.user.impl;
 
-import com.multiverse.api.springsecuritybackendmultiverseapi.auth.ExtractEmail;
+import com.multiverse.api.springsecuritybackendmultiverseapi.auth.Extract;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +20,12 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private ExtractEmail extractEmail;
+    private Extract extract;
 
     @Override
     public ResponseEntity<List<User>> getAllUsers(HttpServletRequest token) {
-        User user = userRepository.findByEmail(extractEmail.fromJwt(token)).orElseGet(User::new);
-        if(user.getId() != null){
-            if(user.getRole().getName().equals("GRUNT")){
-                List<User> userList = new ArrayList<>();
-                userList.add(userRepository.findById(user.getId()).orElseGet(User::new));
-                return ResponseEntity.ok().body(userList);
-            }
-            return ResponseEntity.ok().body(userRepository.findAll());
-        }
-        return ResponseEntity.ok().body(new ArrayList<>());
+        User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseGet(User::new);
+        return extract.listOfUser(user);
     }
 
     @Override
