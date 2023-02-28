@@ -29,6 +29,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserById(int userID){
+
+        return userRepository.findById(userID).orElse(null);
+    }
+
+    @Override
     public ResponseEntity<User> deleteUserById(HttpServletRequest token, UserRequest userRequest, Integer userId) {
 
         Optional<User> optionalUser =  userRepository.findById(userId);

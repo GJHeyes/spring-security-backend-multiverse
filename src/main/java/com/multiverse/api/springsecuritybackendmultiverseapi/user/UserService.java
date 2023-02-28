@@ -10,6 +10,8 @@ public interface UserService {
 
     public ResponseEntity<List<User>> getAllUsers(HttpServletRequest token);
 
+    public User getUserById(int UserID);
+
     public ResponseEntity<User> deleteUserById(HttpServletRequest token, UserRequest userRequest, Integer userId);
 
     public ResponseEntity<User> editUserEmailById(HttpServletRequest token, UserRequest userRequest, Integer userId);
