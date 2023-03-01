@@ -1,8 +1,13 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.recipes.impl;
 
+import com.multiverse.api.springsecuritybackendmultiverseapi.auth.Extract;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.*;
+import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
+import com.multiverse.api.springsecuritybackendmultiverseapi.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +18,12 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
     private RecipeRepository recipeRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private Extract extract;
 
     @Autowired
     private RecipeBuilder recipeBuilder;
@@ -34,12 +45,14 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     @Transactional
-    public Recipe updateRecipe(RecipeRequest recipeRequest, int recipeID) {
+    public ResponseEntity<Recipe> updateRecipe(HttpServletRequest token, RecipeRequest recipeRequest, int recipeID) {
         Recipe updateRecipe = recipeRepository.findById(recipeID).orElseGet(Recipe::new);
-        if(updateRecipe.getTitle() != null){
+        User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseGet(User::new);
+        if(extract.getRole(user).equals("ADMIN") || updateRecipe.getCreateBy().equals(user.getEmail())){
             updateRecipe.setTitle(recipeRequest.getTitle());
+            return ResponseEntity.ok().body(updateRecipe);
         }
-        return updateRecipe;
+        return ResponseEntity.badRequest().body(updateRecipe);
     }
 
     @Override
