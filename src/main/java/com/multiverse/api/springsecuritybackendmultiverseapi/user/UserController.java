@@ -63,4 +63,10 @@ public class UserController {
         user.getRecipes().add(recipe);
         return ResponseEntity.ok().body(user);
     }
+
+    @PutMapping("/admin/{userId}")
+    public ResponseEntity<User> workerToAdmin(@NonNull HttpServletRequest token, @PathVariable("userId") Integer userId){
+        return userService.workerToAdmin(token,userId);
+    }
+
 }

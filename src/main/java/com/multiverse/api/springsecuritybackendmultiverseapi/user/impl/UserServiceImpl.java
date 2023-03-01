@@ -1,6 +1,8 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.user.impl;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.auth.Extract;
+import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
+import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private Extract extract;
@@ -43,7 +48,7 @@ public class UserServiceImpl implements UserService {
             userRepository.delete(user);
             return ResponseEntity.ok().body(user);
         }
-        return ResponseEntity.badRequest().body(user);
+        return ResponseEntity.badRequest().body(null);
     }
 
     @Override
@@ -55,12 +60,25 @@ public class UserServiceImpl implements UserService {
             user.setEmail(userRequest.getEmail());
             return ResponseEntity.ok().body(user);
         }
-        return ResponseEntity.badRequest().body(user);
+        return ResponseEntity.badRequest().body(null);
     }
 
     @Override
     public ResponseEntity<User> addUser(HttpServletRequest token, UserRequest userRequest) {
         UserBuilder userBuilder = new UserBuilder();
         return ResponseEntity.ok().body(userRepository.save(userBuilder.build(userRequest)));
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<User> workerToAdmin(HttpServletRequest token, Integer userId) {
+        User admin = userRepository.findByEmail(extract.emailFromJwt(token)).orElseGet(User::new);
+        User user = userRepository.findById(userId).orElseGet(User::new);
+        Role role = roleRepository.findByName("ADMIN").orElseGet(Role::new);
+        if(extract.getRole(admin).equals("ADMIN")){
+            user.setRole(role);
+            return ResponseEntity.ok().body(user);
+        }
+        return ResponseEntity.badRequest().body(null);
     }
 }

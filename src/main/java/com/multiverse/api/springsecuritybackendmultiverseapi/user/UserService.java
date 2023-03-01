@@ -17,4 +17,6 @@ public interface UserService {
     public ResponseEntity<User> editUserEmailById(HttpServletRequest token, UserRequest userRequest, Integer userId);
 
     public ResponseEntity<User> addUser(HttpServletRequest token, UserRequest userRequest);
+
+    public ResponseEntity<User> workerToAdmin(HttpServletRequest token, Integer userId);
 }
