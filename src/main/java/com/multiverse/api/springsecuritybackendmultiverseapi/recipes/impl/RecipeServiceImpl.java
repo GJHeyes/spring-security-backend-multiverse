@@ -52,7 +52,7 @@ public class RecipeServiceImpl implements RecipeService {
             updateRecipe.setTitle(recipeRequest.getTitle());
             return ResponseEntity.ok().body(updateRecipe);
         }
-        return ResponseEntity.badRequest().body(updateRecipe);
+        return ResponseEntity.badRequest().body(null);
     }
 
     @Override
