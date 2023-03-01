@@ -57,12 +57,8 @@ public class RecipeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@RequestBody RecipeRequest recipeRequest, @PathVariable("id") int recipeID){
-            Recipe optionalRequest = recipeService.getRecipeById(recipeID);
-            if (optionalRequest != null) {
-                return ResponseEntity.ok().body (recipeService.updateRecipe(recipeRequest, recipeID));
-            }
-            return ResponseEntity.badRequest().body(null);
+    public ResponseEntity<Recipe> updateRecipe(@NonNull HttpServletRequest token, @RequestBody RecipeRequest recipeRequest, @PathVariable("id") int recipeID){
+        return recipeService.updateRecipe(token,recipeRequest, recipeID);
     }
 
     @DeleteMapping("/{id}")
