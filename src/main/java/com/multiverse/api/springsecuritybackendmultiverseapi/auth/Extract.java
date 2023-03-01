@@ -38,7 +38,7 @@ public class Extract {
     public ResponseEntity<List<User>> listOfUser(User user){
         String roleName = getRole(user);
         if(user.getId() != null){
-            if(roleName.equals("GRUNT")){
+            if(roleName.equals("WORKER")){
                 List<User> userList = new ArrayList<>();
                 userList.add(userRepository.findById(user.getId()).orElseGet(User::new));
                 return ResponseEntity.ok().body(userList);
