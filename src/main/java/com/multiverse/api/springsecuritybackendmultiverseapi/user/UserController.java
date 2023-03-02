@@ -42,14 +42,14 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @DeleteMapping()
-    public ResponseEntity<User> deleteUser(@NonNull HttpServletRequest token, @RequestBody @NonNull UserRequest userRequest, @PathVariable("id") Integer userId){
-        return userService.deleteUserById(token, userRequest, userId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@NonNull HttpServletRequest token, @PathVariable("id") Integer userId){
+        return userService.deleteUserById(token, userId);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> editUserEmail(@NonNull HttpServletRequest token, UserRequest userRequest, @PathVariable("id") Integer userId){
-        return userService.editUserEmailById(token, userRequest, userId);
+    public ResponseEntity<String> editUserEmail(@NonNull HttpServletRequest token, @RequestBody UserRequest userRequest, @PathVariable("id") Integer userId){
+        return userService.editUserById(token, userRequest, userId);
     }
 
     @Transactional
@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @PutMapping("/admin/{userId}")
-    public ResponseEntity<User> workerToAdmin(@NonNull HttpServletRequest token, @PathVariable("userId") Integer userId){
+    public ResponseEntity<String> workerToAdmin(@NonNull HttpServletRequest token, @PathVariable("userId") Integer userId){
         return userService.workerToAdmin(token,userId);
     }
 
