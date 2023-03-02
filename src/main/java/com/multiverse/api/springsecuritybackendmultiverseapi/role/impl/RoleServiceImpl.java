@@ -53,9 +53,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role deleteRole(int roleId) throws CustomError {
+    public String deleteRole(int roleId) throws CustomError {
         Role role = roleRepository.findById(roleId).orElseThrow(()->new CustomError("Role not found"));
         roleRepository.deleteById(roleId);
-        return role;
+        return "Role deleted";
     }
 }
