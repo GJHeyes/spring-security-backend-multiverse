@@ -1,6 +1,7 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.recipes.impl;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.auth.Extract;
+import com.multiverse.api.springsecuritybackendmultiverseapi.exception.CustomError;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.*;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.UserRepository;
@@ -29,14 +30,14 @@ public class RecipeServiceImpl implements RecipeService {
     private RecipeBuilder recipeBuilder;
 
     @Override
-    public ResponseEntity<List<Recipe>> getAllRecipes(HttpServletRequest token) {
-        User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseGet(User::new);
+    public ResponseEntity<List<Recipe>> getAllRecipes(HttpServletRequest token)  throws CustomError{
+        User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseThrow(()-> new CustomError("User not found"));
         return extract.listOfRecipe(user);
     }
 
     @Override
-    public Recipe getRecipeById(int recipeID){
-        return recipeRepository.findById(recipeID).orElse(null);
+    public Recipe getRecipeById(int recipeID)throws CustomError{
+        return recipeRepository.findById(recipeID).orElseThrow(()->new CustomError("Recipe not found"));
     }
 
     @Override
@@ -46,32 +47,21 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     @Transactional
-    public ResponseEntity<Recipe> updateRecipe(HttpServletRequest token, RecipeRequest recipeRequest, int recipeID) {
-        Recipe updateRecipe = recipeRepository.findById(recipeID).orElseGet(Recipe::new);
-        User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseGet(User::new);
+    public ResponseEntity<Recipe> updateRecipe(HttpServletRequest token, RecipeRequest recipeRequest, int recipeID) throws CustomError{
+        Recipe updateRecipe = recipeRepository.findById(recipeID).orElseThrow(()->new CustomError("Recipe not found"));
+        User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseThrow(()->new CustomError("User not found"));
         if(extract.getRole(user).equals("ADMIN") || updateRecipe.getCreateBy().equals(user.getEmail())){
             updateRecipe.setTitle(recipeRequest.getTitle());
             return ResponseEntity.ok().body(updateRecipe);
         }
-        return ResponseEntity.badRequest().body(null);
+        throw new CustomError("Admin not found or User not recipe owner");
     }
 
     @Override
-    public Recipe deleteRecipe(int recipeID) throws Exception {
-        Recipe deletedRecipe = null;
-        try {
-            deletedRecipe = recipeRepository.findById(recipeID).orElse(null);
-            if(deletedRecipe == null) {
-                throw new Exception("recipe not available");
-            }
-            else {
-                recipeRepository.deleteById(recipeID);
-            }
-        }
-        catch(Exception ex) {
-            throw ex;
-        }
-        return deletedRecipe;
+    public String deleteRecipe(int recipeID) throws CustomError {
+        Recipe recipe = recipeRepository.findById(recipeID).orElseThrow(()->new CustomError("Recipe not found"));
+        recipeRepository.delete(recipe);
+        return "Recipe deleted";
     }
 
 }

@@ -25,15 +25,7 @@ public class RecipeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Recipe> getRecipesById(@PathVariable("id") int recipeID){
-        Recipe recipe = null;
-        try {
-            recipe = recipeService.getRecipeById(recipeID);
-        }
-        catch(Exception ex) {
-            ex.getMessage();
-        }
-
-        return new ResponseEntity<Recipe>(recipe, HttpStatus.OK);
+        return new ResponseEntity<>(recipeService.getRecipeById(recipeID), HttpStatus.OK);
     }
 
     @PostMapping()
@@ -54,14 +46,7 @@ public class RecipeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Recipe> deleteRecipe(@PathVariable("id") int recipeID){
-        Recipe recipe = null;
-        try {
-            recipe = recipeService.deleteRecipe(recipeID);
-        }
-        catch(Exception ex) {
-            ex.getMessage();
-        }
-        return new ResponseEntity<Recipe>(recipe, HttpStatus.OK);
+    public ResponseEntity<String> deleteRecipe(@PathVariable("id") int recipeID){
+        return ResponseEntity.ok().body(recipeService.deleteRecipe(recipeID));
     }
 }
