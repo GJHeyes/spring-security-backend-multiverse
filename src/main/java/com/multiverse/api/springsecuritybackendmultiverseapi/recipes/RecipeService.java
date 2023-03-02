@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface RecipeService {
-    public List<Recipe> getAllRecipes();
+    public ResponseEntity<List<Recipe>> getAllRecipes(HttpServletRequest token);
     public Recipe getRecipeById(int recipeID);
     public Recipe addRecipe(HttpServletRequest token, RecipeRequest recipeRequest);
     public ResponseEntity<Recipe> updateRecipe(HttpServletRequest token, RecipeRequest recipeRequest, int recipeID);

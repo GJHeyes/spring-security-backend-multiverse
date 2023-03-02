@@ -29,8 +29,9 @@ public class RecipeServiceImpl implements RecipeService {
     private RecipeBuilder recipeBuilder;
 
     @Override
-    public List<Recipe> getAllRecipes() {
-        return (List<Recipe>) recipeRepository.findAll();
+    public ResponseEntity<List<Recipe>> getAllRecipes(HttpServletRequest token) {
+        User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseGet(User::new);
+        return extract.listOfRecipe(user);
     }
 
     @Override
