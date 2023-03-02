@@ -60,8 +60,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public ResponseEntity<String> editUserById(HttpServletRequest token, UserRequest userRequest, Integer userId) throws CustomError {
+        String email =  extract.emailFromJwt(token);
         User user = userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
-        if(userRequest != null){
+        boolean correctUser = user.getEmail().equals(email);
+        if(userRequest != null && correctUser){
             if(userRequest.getEmail() != null){
                 user.setEmail(userRequest.getEmail());
             }
@@ -70,7 +72,7 @@ public class UserServiceImpl implements UserService {
             }
             return ResponseEntity.ok().body(user.getEmail());
         }
-        return ResponseEntity.badRequest().body("No data to update");
+        return ResponseEntity.badRequest().body("Incorrect User, or no data to update");
     }
 
     //Not relevent
