@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
             user.setRole(role);
             return ResponseEntity.ok().body(String.format("Email: %s, Role: %s", user.getEmail(),user.getRole().getName()));
         }
-        return ResponseEntity.badRequest().body("Unknown Error");
+        return ResponseEntity.badRequest().body("User not admin, access denied");
     }
 
     @Override
