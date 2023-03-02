@@ -19,16 +19,8 @@ public class RecipeController {
     private RecipeServiceImpl recipeService;
 
     @GetMapping()
-    public ResponseEntity<List<Recipe>> getAllRecipes(){
-        List<Recipe> recipes = null;
-        try {
-            recipes = recipeService.getAllRecipes();
-        }
-        catch(Exception ex) {
-            ex.getMessage();
-        }
-
-        return new ResponseEntity<List<Recipe>>(recipes, HttpStatus.OK);
+    public ResponseEntity<List<Recipe>> getAllRecipes(HttpServletRequest token){
+        return recipeService.getAllRecipes(token);
     }
 
     @GetMapping("/{id}")

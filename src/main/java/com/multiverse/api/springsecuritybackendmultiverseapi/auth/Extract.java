@@ -1,5 +1,7 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.auth;
 
+import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipe;
+import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
@@ -27,6 +29,9 @@ public class Extract {
     private UserRepository userRepository;
 
     @Autowired
+    private RecipeRepository recipeRepository;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     public String emailFromJwt(HttpServletRequest token){
@@ -44,6 +49,19 @@ public class Extract {
                 return ResponseEntity.ok().body(userList);
             }
             return ResponseEntity.ok().body(userRepository.findAll());
+        }
+        return ResponseEntity.ok().body(new ArrayList<>());
+    }
+
+    public ResponseEntity<List<Recipe>> listOfRecipe(User user){
+        String roleName = getRole(user);
+        if(user.getId() != null){
+            if(roleName.equals("WORKER")){
+                List<Recipe> recipeList = new ArrayList<>();
+                recipeList.add(recipeRepository.findById(user.getId()).orElseGet(Recipe::new));
+                return ResponseEntity.ok().body(recipeList);
+            }
+            return ResponseEntity.ok().body((List<Recipe>) recipeRepository.findAll());
         }
         return ResponseEntity.ok().body(new ArrayList<>());
     }
