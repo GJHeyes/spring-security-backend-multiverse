@@ -31,15 +31,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int userID){
-        User user = null;
-        try {
-            user = userService.getUserById(userID);
-        }
-        catch(Exception ex) {
-            ex.getMessage();
-        }
-
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        return userService.getUserById(userID);
     }
 
     @DeleteMapping("/{id}")
@@ -54,14 +46,8 @@ public class UserController {
 
     @Transactional
     @PutMapping("/{id}/{recipeID}")
-    public ResponseEntity<User> favouriteRecipe(@PathVariable("id") int userID, @PathVariable("recipeID") int recipeID) {
-        User user = userService.getUserById(userID);
-        Recipe recipe = recipeService.getRecipeById(recipeID);
-        if (recipe == null){
-            return ResponseEntity.badRequest().body(user);
-        }
-        user.getRecipes().add(recipe);
-        return ResponseEntity.ok().body(user);
+    public ResponseEntity<String> addRecipeToUser(@PathVariable("id") int userID, @PathVariable("recipeID") int recipeID) {
+        return userService.addRecipeToUser(userID,recipeID);
     }
 
     @PutMapping("/admin/{userId}")

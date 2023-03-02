@@ -1,6 +1,9 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.user.impl;
 
 import com.multiverse.api.springsecuritybackendmultiverseapi.auth.Extract;
+import com.multiverse.api.springsecuritybackendmultiverseapi.exception.CustomError;
+import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipe;
+import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.*;
@@ -10,9 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private RecipeRepository recipeRepository;
 
     @Autowired
     private UserBuilder userBuilder;
@@ -37,28 +41,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int userID){
-
-        return userRepository.findById(userID).orElse(null);
+    public ResponseEntity<User> getUserById(int userID) throws CustomError{
+        User user = userRepository.findById(userID).orElseThrow(()-> new CustomError("User not found"));
+        return ResponseEntity.ok().body(user);
     }
 
     @Override
-    public ResponseEntity<String> deleteUserById(HttpServletRequest token, Integer userId) {
-
-        Optional<User> optionalUser =  userRepository.findById(userId);
-        User user = optionalUser.orElseGet(User::new);
-        if(optionalUser.isPresent()){
-            userRepository.delete(user);
-            return ResponseEntity.ok().body("User deleted");
-        }
-        return ResponseEntity.badRequest().body("User does not exist");
+    public ResponseEntity<String> deleteUserById(HttpServletRequest token, Integer userId) throws CustomError {
+        User user =  userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
+        userRepository.delete(user);
+        return ResponseEntity.ok().body("User deleted");
     }
 
     @Override
     @Transactional
-    public ResponseEntity<String> editUserById(HttpServletRequest token, UserRequest userRequest, Integer userId) {
-        User user = userRepository.findById(userId).orElseGet(User::new);
-        if(user.getId() != null){
+    public ResponseEntity<String> editUserById(HttpServletRequest token, UserRequest userRequest, Integer userId) throws CustomError {
+        User user = userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
+        if(userRequest != null){
             if(userRequest.getEmail() != null){
                 user.setEmail(userRequest.getEmail());
             }
@@ -67,7 +66,7 @@ public class UserServiceImpl implements UserService {
             }
             return ResponseEntity.ok().body(user.getEmail());
         }
-        return ResponseEntity.badRequest().body("User not found");
+        return ResponseEntity.badRequest().body("No data to update");
     }
 
     @Override
@@ -77,14 +76,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseEntity<String> workerToAdmin(HttpServletRequest token, Integer userId) {
-        User admin = userRepository.findByEmail(extract.emailFromJwt(token)).orElseGet(User::new);
-        User user = userRepository.findById(userId).orElseGet(User::new);
-        Role role = roleRepository.findByName("ADMIN").orElseGet(Role::new);
-        if(extract.getRole(admin).equals("ADMIN") && user.getId() != null){
+    public ResponseEntity<String> workerToAdmin(HttpServletRequest token, Integer userId) throws CustomError{
+        User admin = userRepository.findByEmail(extract.emailFromJwt(token)).orElseThrow(()-> new CustomError("Admin doesn't exist"));
+        User user = userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
+        Role role = roleRepository.findByName("ADMIN").orElseThrow(()-> new CustomError("Admin not found"));
+        if(extract.getRole(admin).equals("ADMIN")){
             user.setRole(role);
             return ResponseEntity.ok().body(String.format("Email: %s, Role: %s", user.getEmail(),user.getRole().getName()));
         }
-        return ResponseEntity.badRequest().body("Either requester is not an Admin or User does not exist");
+        return ResponseEntity.badRequest().body("Unknown Error");
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<String> addRecipeToUser(Integer userId, Integer recipeID) throws CustomError {
+        User user = userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
+        Recipe recipe = recipeRepository.findById(recipeID).orElseThrow(()-> new CustomError("Recipe not found"));
+        user.getRecipes().add(recipe);
+        return ResponseEntity.ok().body(user.getRecipes().get(user.getRecipes().size()-1).getTitle());
     }
 }
