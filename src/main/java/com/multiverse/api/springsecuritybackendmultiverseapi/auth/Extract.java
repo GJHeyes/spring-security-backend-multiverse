@@ -1,5 +1,6 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.auth;
 
+import com.multiverse.api.springsecuritybackendmultiverseapi.exception.CustomError;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.Recipe;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.RecipeRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
@@ -40,28 +41,28 @@ public class Extract {
         return jwtService.extractUsername(jwtToken);
     }
 
-    public ResponseEntity<List<User>> listOfUser(User user){
+    public ResponseEntity<List<User>> listOfUser(User user) throws CustomError{
         String roleName = getRole(user);
         if(roleName.equals("ADMIN")){
             return ResponseEntity.ok().body(userRepository.findAll());
         }
-        return ResponseEntity.badRequest().body(new ArrayList<>());
+        throw new CustomError("Admin not found");
     }
 
-    public ResponseEntity<List<Recipe>> listOfRecipe(User user){
+    public ResponseEntity<List<Recipe>> listOfRecipe(User user) throws CustomError{
         String roleName = getRole(user);
         if(roleName.equals("ADMIN")){
             return ResponseEntity.ok().body((List<Recipe>) recipeRepository.findAll());
         }
-        return ResponseEntity.badRequest().body(new ArrayList<>());
+        throw new CustomError("Admin not found");
     }
 
-    public ResponseEntity<List<Role>> listOfRole(User user){
+    public ResponseEntity<List<Role>> listOfRole(User user) throws CustomError{
         String roleName = getRole(user);
         if(roleName.equals("ADMIN")){ //the user exist?
                 return ResponseEntity.ok().body((List<Role>) roleRepository.findAll());
         }
-        return ResponseEntity.badRequest().body(new ArrayList<>());
+        throw new CustomError("Admin not found");
     }
 
     //if admin returns all roles. if grunt returns role user has
