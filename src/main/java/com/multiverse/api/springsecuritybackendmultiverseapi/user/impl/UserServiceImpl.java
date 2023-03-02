@@ -10,6 +10,7 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.user.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -62,7 +66,7 @@ public class UserServiceImpl implements UserService {
                 user.setEmail(userRequest.getEmail());
             }
             if(userRequest.getPassword() != null){
-                user.setPassword(userRequest.getPassword());
+                user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
             }
             return ResponseEntity.ok().body(user.getEmail());
         }

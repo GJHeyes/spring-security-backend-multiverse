@@ -12,5 +12,5 @@ public interface RecipeService {
     public Recipe getRecipeById(int recipeID);
     public Recipe addRecipe(HttpServletRequest token, RecipeRequest recipeRequest);
     public ResponseEntity<Recipe> updateRecipe(HttpServletRequest token, RecipeRequest recipeRequest, int recipeID);
-    public Recipe deleteRecipe(int recipeID) throws Exception;
+    public String deleteRecipe(int recipeID) throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.multiverse.api.springsecuritybackendmultiverseapi.auth;
 
+import com.multiverse.api.springsecuritybackendmultiverseapi.exception.CustomError;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.UserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +13,9 @@ public class AuthenticationController {
 
     private final AuthenticationService service;
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
+    public ResponseEntity<AuthenticationResponse> register (
             @RequestBody UserRequest request
-    ){
+    ) {
         return ResponseEntity.ok(service.register(request));
     }
 
