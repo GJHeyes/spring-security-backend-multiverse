@@ -10,7 +10,7 @@ public interface UserService {
 
     public ResponseEntity<List<User>> getAllUsers(HttpServletRequest token);
 
-    public User getUserById(int UserID);
+    public ResponseEntity<User> getUserById(int UserID);
 
     public ResponseEntity<String> deleteUserById(HttpServletRequest token, Integer userId);
 
@@ -19,4 +19,6 @@ public interface UserService {
     public ResponseEntity<User> addUser(HttpServletRequest token, UserRequest userRequest);
 
     public ResponseEntity<String> workerToAdmin(HttpServletRequest token, Integer userId);
+
+    public ResponseEntity<String> addRecipeToUser(Integer userId, Integer recipeID);
 }
