@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
     private Extract extract;
 
     @Override
-    public ResponseEntity<List<User>> getAllUsers(HttpServletRequest token) {
-        User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseGet(User::new);
+    public ResponseEntity<List<User>> getAllUsers(HttpServletRequest token) throws CustomError {
+        User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseThrow(()-> new CustomError("User not found"));
         return extract.listOfUser(user);
     }
 
@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.badRequest().body("No data to update");
     }
 
+    //Not relevent
     @Override
     public ResponseEntity<User> addUser(HttpServletRequest token, UserRequest userRequest) {
         return ResponseEntity.ok().body(userRepository.save(userBuilder.build(userRequest)));
