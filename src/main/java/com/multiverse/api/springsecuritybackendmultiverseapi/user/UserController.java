@@ -40,18 +40,18 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> editUserEmail(@NonNull HttpServletRequest token, @RequestBody UserRequest userRequest, @PathVariable("id") Integer userId){
+    public ResponseEntity<User> editUserById(@NonNull HttpServletRequest token, @RequestBody UserRequest userRequest, @PathVariable("id") Integer userId){
         return userService.editUserById(token, userRequest, userId);
     }
 
     @Transactional
     @PutMapping("/{id}/{recipeID}")
-    public ResponseEntity<String> addRecipeToUser(@PathVariable("id") int userID, @PathVariable("recipeID") int recipeID) {
+    public ResponseEntity<User> addRecipeToUser(@PathVariable("id") int userID, @PathVariable("recipeID") int recipeID) {
         return userService.addRecipeToUser(userID,recipeID);
     }
 
     @PutMapping("/admin/{userId}")
-    public ResponseEntity<String> workerToAdmin(@NonNull HttpServletRequest token, @PathVariable("userId") Integer userId){
+    public ResponseEntity<User> workerToAdmin(@NonNull HttpServletRequest token, @PathVariable("userId") Integer userId){
         return userService.workerToAdmin(token,userId);
     }
 

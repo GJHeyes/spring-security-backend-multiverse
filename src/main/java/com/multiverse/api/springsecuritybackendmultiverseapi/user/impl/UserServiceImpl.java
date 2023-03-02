@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseEntity<String> editUserById(HttpServletRequest token, UserRequest userRequest, Integer userId) throws CustomError {
+    public ResponseEntity<User> editUserById(HttpServletRequest token, UserRequest userRequest, Integer userId) throws CustomError {
         String email =  extract.emailFromJwt(token);
         User user = userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
         boolean correctUser = user.getEmail().equals(email);
@@ -70,9 +70,9 @@ public class UserServiceImpl implements UserService {
             if(userRequest.getPassword() != null){
                 user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
             }
-            return ResponseEntity.ok().body(user.getEmail());
+            return ResponseEntity.ok().body(user);
         }
-        return ResponseEntity.badRequest().body("Incorrect User, or no data to update");
+        throw new CustomError("Incorrect User, or no data to update");
     }
 
     //Not relevent
@@ -83,23 +83,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseEntity<String> workerToAdmin(HttpServletRequest token, Integer userId) throws CustomError{
+    public ResponseEntity<User> workerToAdmin(HttpServletRequest token, Integer userId) throws CustomError{
         User admin = userRepository.findByEmail(extract.emailFromJwt(token)).orElseThrow(()-> new CustomError("Admin doesn't exist"));
         User user = userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
         Role role = roleRepository.findByName("ADMIN").orElseThrow(()-> new CustomError("Admin not found"));
         if(extract.getRole(admin).equals("ADMIN")){
             user.setRole(role);
-            return ResponseEntity.ok().body(String.format("Email: %s, Role: %s", user.getEmail(),user.getRole().getName()));
+            return ResponseEntity.ok().body(user);
         }
-        return ResponseEntity.badRequest().body("User not admin, access denied");
+        throw new CustomError("User not admin, access denied");
     }
 
     @Override
     @Transactional
-    public ResponseEntity<String> addRecipeToUser(Integer userId, Integer recipeID) throws CustomError {
+    public ResponseEntity<User> addRecipeToUser(Integer userId, Integer recipeID) throws CustomError {
         User user = userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
         Recipe recipe = recipeRepository.findById(recipeID).orElseThrow(()-> new CustomError("Recipe not found"));
         user.getRecipes().add(recipe);
-        return ResponseEntity.ok().body(user.getRecipes().get(user.getRecipes().size()-1).getTitle());
+        return ResponseEntity.ok().body(user);
     }
 }
