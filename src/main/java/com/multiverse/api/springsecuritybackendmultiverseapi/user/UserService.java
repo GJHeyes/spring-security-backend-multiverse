@@ -12,11 +12,11 @@ public interface UserService {
 
     public User getUserById(int UserID);
 
-    public ResponseEntity<User> deleteUserById(HttpServletRequest token, UserRequest userRequest, Integer userId);
+    public ResponseEntity<String> deleteUserById(HttpServletRequest token, Integer userId);
 
-    public ResponseEntity<User> editUserEmailById(HttpServletRequest token, UserRequest userRequest, Integer userId);
+    public ResponseEntity<String> editUserById(HttpServletRequest token, UserRequest userRequest, Integer userId);
 
     public ResponseEntity<User> addUser(HttpServletRequest token, UserRequest userRequest);
 
-    public ResponseEntity<User> workerToAdmin(HttpServletRequest token, Integer userId);
+    public ResponseEntity<String> workerToAdmin(HttpServletRequest token, Integer userId);
 }

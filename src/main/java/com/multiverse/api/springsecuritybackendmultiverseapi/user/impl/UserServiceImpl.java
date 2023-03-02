@@ -25,6 +25,9 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Autowired
+    private UserBuilder userBuilder;
+
+    @Autowired
     private Extract extract;
 
     @Override
@@ -40,45 +43,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<User> deleteUserById(HttpServletRequest token, UserRequest userRequest, Integer userId) {
+    public ResponseEntity<String> deleteUserById(HttpServletRequest token, Integer userId) {
 
         Optional<User> optionalUser =  userRepository.findById(userId);
         User user = optionalUser.orElseGet(User::new);
         if(optionalUser.isPresent()){
             userRepository.delete(user);
-            return ResponseEntity.ok().body(user);
+            return ResponseEntity.ok().body("User deleted");
         }
-        return ResponseEntity.badRequest().body(null);
+        return ResponseEntity.badRequest().body("User does not exist");
     }
 
     @Override
     @Transactional
-    public ResponseEntity<User> editUserEmailById(HttpServletRequest token, UserRequest userRequest, Integer userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
+    public ResponseEntity<String> editUserById(HttpServletRequest token, UserRequest userRequest, Integer userId) {
         User user = userRepository.findById(userId).orElseGet(User::new);
-        if(optionalUser.isPresent()){
-            user.setEmail(userRequest.getEmail());
-            return ResponseEntity.ok().body(user);
+        if(user.getId() != null){
+            if(userRequest.getEmail() != null){
+                user.setEmail(userRequest.getEmail());
+            }
+            if(userRequest.getPassword() != null){
+                user.setPassword(userRequest.getPassword());
+            }
+            return ResponseEntity.ok().body(user.getEmail());
         }
-        return ResponseEntity.badRequest().body(null);
+        return ResponseEntity.badRequest().body("User not found");
     }
 
     @Override
     public ResponseEntity<User> addUser(HttpServletRequest token, UserRequest userRequest) {
-        UserBuilder userBuilder = new UserBuilder();
         return ResponseEntity.ok().body(userRepository.save(userBuilder.build(userRequest)));
     }
 
     @Override
     @Transactional
-    public ResponseEntity<User> workerToAdmin(HttpServletRequest token, Integer userId) {
+    public ResponseEntity<String> workerToAdmin(HttpServletRequest token, Integer userId) {
         User admin = userRepository.findByEmail(extract.emailFromJwt(token)).orElseGet(User::new);
         User user = userRepository.findById(userId).orElseGet(User::new);
         Role role = roleRepository.findByName("ADMIN").orElseGet(Role::new);
-        if(extract.getRole(admin).equals("ADMIN")){
+        if(extract.getRole(admin).equals("ADMIN") && user.getId() != null){
             user.setRole(role);
-            return ResponseEntity.ok().body(user);
+            return ResponseEntity.ok().body(String.format("Email: %s, Role: %s", user.getEmail(),user.getRole().getName()));
         }
-        return ResponseEntity.badRequest().body(null);
+        return ResponseEntity.badRequest().body("Either requester is not an Admin or User does not exist");
     }
 }
