@@ -18,14 +18,7 @@ public class RoleController {
 
     @GetMapping()
     public ResponseEntity<List<Role>> getAllRoles(@NonNull HttpServletRequest token){
-        List<Role> roles = null;
-        try{
-            roles = roleService.getAllRoles(token);
-
-        }catch(Exception ex){
-            ex.getMessage();
-        }
-        return new ResponseEntity<>(roles,HttpStatus.OK);
+        return roleService.getAllRoles(token);
     }
 
 

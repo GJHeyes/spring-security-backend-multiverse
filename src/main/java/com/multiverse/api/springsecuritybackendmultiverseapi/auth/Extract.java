@@ -42,42 +42,26 @@ public class Extract {
 
     public ResponseEntity<List<User>> listOfUser(User user){
         String roleName = getRole(user);
-        if(user.getId() != null){
-            if(roleName.equals("WORKER")){
-                List<User> userList = new ArrayList<>();
-                userList.add(userRepository.findById(user.getId()).orElseGet(User::new));
-                return ResponseEntity.ok().body(userList);
-            }
+        if(roleName.equals("ADMIN")){
             return ResponseEntity.ok().body(userRepository.findAll());
         }
-        return ResponseEntity.ok().body(new ArrayList<>());
+        return ResponseEntity.badRequest().body(new ArrayList<>());
     }
 
     public ResponseEntity<List<Recipe>> listOfRecipe(User user){
         String roleName = getRole(user);
-        if(user.getId() != null){
-            if(roleName.equals("WORKER")){
-                List<Recipe> recipeList = new ArrayList<>();
-                recipeList.add(recipeRepository.findById(user.getId()).orElseGet(Recipe::new));
-                return ResponseEntity.ok().body(recipeList);
-            }
+        if(roleName.equals("ADMIN")){
             return ResponseEntity.ok().body((List<Recipe>) recipeRepository.findAll());
         }
-        return ResponseEntity.ok().body(new ArrayList<>());
+        return ResponseEntity.badRequest().body(new ArrayList<>());
     }
 
-    public List<Role> listOfRole(User user){
+    public ResponseEntity<List<Role>> listOfRole(User user){
         String roleName = getRole(user);
-        if(user.getId() != null){ //the user exist?
-            if(roleName.equals("WORKER")){
-                List<Role> roleList = new ArrayList<>();
-                roleList.add(roleRepository.findByName(user.getRole().getName()).orElseGet(Role::new));
-                //:: call it as a function (newrole)
-                return roleList;
-            }
-            return (List<Role>) roleRepository.findAll();
+        if(roleName.equals("ADMIN")){ //the user exist?
+                return ResponseEntity.ok().body((List<Role>) roleRepository.findAll());
         }
-        return new ArrayList<>();
+        return ResponseEntity.badRequest().body(new ArrayList<>());
     }
 
     //if admin returns all roles. if grunt returns role user has

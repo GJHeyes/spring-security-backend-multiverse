@@ -8,6 +8,7 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private UserRepository userRepository; //caps is the class lower case is the instance
     @Override
-    public List<Role> getAllRoles(HttpServletRequest token) {
+    public ResponseEntity<List<Role>> getAllRoles(HttpServletRequest token) {
         User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseGet(User::new);
         return extract.listOfRole(user);
     }
