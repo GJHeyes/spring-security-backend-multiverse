@@ -52,9 +52,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<String> deleteUserById(HttpServletRequest token, Integer userId) throws CustomError {
+        String email =  extract.emailFromJwt(token);
         User user =  userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
-        userRepository.delete(user);
-        return ResponseEntity.ok().body("User deleted");
+        boolean correctUser = user.getEmail().equals(email);
+        if(correctUser){
+            userRepository.delete(user);
+            return ResponseEntity.ok().body("User deleted");
+        }
+        throw new CustomError("Incorrect user, access denied");
     }
 
     @Override
