@@ -18,11 +18,9 @@ import java.util.ArrayList;
 public class AuthenticationService {
 
     private final UserRepository repository;
-
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-
     private final AuthenticationManager authenticationManager;
 
 
