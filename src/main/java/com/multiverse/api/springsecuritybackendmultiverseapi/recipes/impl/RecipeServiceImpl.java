@@ -7,6 +7,7 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,19 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
-
-    @Autowired
-    private RecipeRepository recipeRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private Extract extract;
-
-    @Autowired
-    private RecipeBuilder recipeBuilder;
+    private final RecipeRepository recipeRepository;
+    private final UserRepository userRepository;
+    private final Extract extract;
+    private final RecipeBuilder recipeBuilder;
 
     @Override
     public ResponseEntity<List<Recipe>> getAllRecipes(HttpServletRequest token)  throws CustomError{

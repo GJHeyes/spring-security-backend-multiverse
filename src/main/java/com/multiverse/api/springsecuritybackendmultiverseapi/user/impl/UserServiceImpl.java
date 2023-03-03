@@ -8,6 +8,7 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleRepository;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.*;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,25 +19,14 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private RecipeRepository recipeRepository;
-
-    @Autowired
-    private UserBuilder userBuilder;
-
-    @Autowired
-    private Extract extract;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+    private final RecipeRepository recipeRepository;
+    private final UserBuilder userBuilder;
+    private final Extract extract;
 
     @Override
     public ResponseEntity<List<User>> getAllUsers(HttpServletRequest token) throws CustomError {
