@@ -20,5 +20,5 @@ public interface UserService {
 
     public ResponseEntity<User> workerToAdmin(HttpServletRequest token, Integer userId);
 
-    public ResponseEntity<User> addRecipeToUser(Integer userId, Integer recipeID);
+    public ResponseEntity<User> addRecipeToUser(HttpServletRequest token,Integer userId, Integer recipeID);
 }

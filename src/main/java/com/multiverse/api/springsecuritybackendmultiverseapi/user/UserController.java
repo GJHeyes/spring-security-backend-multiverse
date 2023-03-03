@@ -43,8 +43,8 @@ public class UserController {
 
     @Transactional
     @PutMapping("/{id}/{recipeID}")
-    public ResponseEntity<User> addRecipeToUser(@PathVariable("id") int userID, @PathVariable("recipeID") int recipeID) {
-        return userService.addRecipeToUser(userID,recipeID);
+    public ResponseEntity<User> addRecipeToUser(@NonNull HttpServletRequest token,@PathVariable("id") int userID, @PathVariable("recipeID") int recipeID) {
+        return userService.addRecipeToUser(token, userID,recipeID);
     }
 
     @PutMapping("/admin/{userId}")
