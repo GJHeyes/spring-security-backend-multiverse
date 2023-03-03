@@ -93,10 +93,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseEntity<User> addRecipeToUser(Integer userId, Integer recipeID) throws CustomError {
+    public ResponseEntity<User> addRecipeToUser(HttpServletRequest token, Integer userId, Integer recipeID) throws CustomError {
+        User admin = userRepository.findByEmail(extract.emailFromJwt(token)).orElseThrow(()-> new CustomError("Admin doesn't exist"));
         User user = userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
         Recipe recipe = recipeRepository.findById(recipeID).orElseThrow(()-> new CustomError("Recipe not found"));
-        user.getRecipes().add(recipe);
-        return ResponseEntity.ok().body(user);
+        if(extract.getRole(admin).equals("ADMIN")) {
+            user.getRecipes().add(recipe);
+            return ResponseEntity.ok().body(user);
+        }
+        throw new CustomError("User not admin, access denied");
     }
 }
