@@ -4,18 +4,16 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.auth.Extract;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class RecipeBuilder {
-
-    @Autowired
-    private Extract extract;
-
-    @Autowired
-    private UserRepository userRepository;
+    private final Extract extract;
+    private final UserRepository userRepository;
 
     public Recipe build(HttpServletRequest token, RecipeRequest recipeRequest){
         Recipe recipeBuild = Recipe.builder()

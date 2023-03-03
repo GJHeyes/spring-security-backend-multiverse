@@ -6,6 +6,7 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.role.RoleRepository
 import com.multiverse.api.springsecuritybackendmultiverseapi.role.Role;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.User;
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -15,15 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 @Component
+@RequiredArgsConstructor
 public class Initializer implements ApplicationRunner {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private RecipeRepository recipeRepository;
+    private final RecipeRepository recipeRepository;
 
     @Override
     @Transactional

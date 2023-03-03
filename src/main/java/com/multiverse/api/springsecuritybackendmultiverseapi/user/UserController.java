@@ -6,6 +6,7 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.impl.Recipe
 import com.multiverse.api.springsecuritybackendmultiverseapi.user.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +17,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
-
-    @Autowired
-    private UserServiceImpl userService;
-
-    @Autowired
-    private RecipeServiceImpl recipeService;
+    private final UserServiceImpl userService;
 
     @GetMapping()
     public ResponseEntity<List<User>> getAllUsers(@NonNull HttpServletRequest token){
