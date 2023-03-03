@@ -54,8 +54,9 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<String> deleteUserById(HttpServletRequest token, Integer userId) throws CustomError {
         String email =  extract.emailFromJwt(token);
         User user =  userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
+        User admin = userRepository.findByEmail(email).orElseThrow(()-> new CustomError("Invalid bearer token"));
         boolean correctUser = user.getEmail().equals(email);
-        if(correctUser){
+        if(correctUser|| admin.getRole().getName().equals("ADMIN")){
             userRepository.delete(user);
             return ResponseEntity.ok().body("User deleted");
         }
@@ -67,8 +68,9 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<User> editUserById(HttpServletRequest token, UserRequest userRequest, Integer userId) throws CustomError {
         String email =  extract.emailFromJwt(token);
         User user = userRepository.findById(userId).orElseThrow(()-> new CustomError("User not found"));
+        User admin = userRepository.findByEmail(email).orElseThrow(()-> new CustomError("Invalid Bearer Token"));
         boolean correctUser = user.getEmail().equals(email);
-        if(userRequest != null && correctUser){
+        if(userRequest != null && (correctUser || admin.getRole().getName().equals("ADMIN"))){
             if(userRequest.getEmail() != null){
                 user.setEmail(userRequest.getEmail());
             }
