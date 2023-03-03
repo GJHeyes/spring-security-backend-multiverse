@@ -43,6 +43,11 @@ public class Extract {
 
     public ResponseEntity<List<User>> listOfUser(User user) throws CustomError{
         String roleName = getRole(user);
+        if(roleName.equals("WORKER")){
+            List<User> userList = new ArrayList<>();
+            userList.add(userRepository.findById(user.getId()).orElseThrow(()->new CustomError("User not found")));
+            return ResponseEntity.ok().body(userList);
+        }
         if(roleName.equals("ADMIN")){
             return ResponseEntity.ok().body(userRepository.findAll());
         }
@@ -51,6 +56,9 @@ public class Extract {
 
     public ResponseEntity<List<Recipe>> listOfRecipe(User user) throws CustomError{
         String roleName = getRole(user);
+        if(roleName.equals("WORKER")){
+            return ResponseEntity.ok().body(user.getRecipes());
+        }
         if(roleName.equals("ADMIN")){
             return ResponseEntity.ok().body((List<Recipe>) recipeRepository.findAll());
         }
@@ -59,6 +67,11 @@ public class Extract {
 
     public ResponseEntity<List<Role>> listOfRole(User user) throws CustomError{
         String roleName = getRole(user);
+        if(roleName.equals("WORKER")){
+            List<Role> roleList = new ArrayList<>();
+            roleList.add(user.getRole());
+            return ResponseEntity.ok().body(roleList);
+        }
         if(roleName.equals("ADMIN")){ //the user exist?
                 return ResponseEntity.ok().body((List<Role>) roleRepository.findAll());
         }
