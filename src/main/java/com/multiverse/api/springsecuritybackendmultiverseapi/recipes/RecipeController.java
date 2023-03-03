@@ -3,6 +3,7 @@ package com.multiverse.api.springsecuritybackendmultiverseapi.recipes;
 import com.multiverse.api.springsecuritybackendmultiverseapi.recipes.impl.RecipeServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/recipes")
+@RequiredArgsConstructor
 public class RecipeController {
-
-    @Autowired
-    private RecipeServiceImpl recipeService;
+    private final RecipeServiceImpl recipeService;
 
     @GetMapping()
     public ResponseEntity<List<Recipe>> getAllRecipes(HttpServletRequest token){

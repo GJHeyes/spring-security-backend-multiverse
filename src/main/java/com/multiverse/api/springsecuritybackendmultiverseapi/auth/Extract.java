@@ -10,6 +10,7 @@ import com.multiverse.api.springsecuritybackendmultiverseapi.user.UserRepository
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -18,22 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Component
 public class Extract {
 
-    @Autowired
-    private JwtService jwtService;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RecipeRepository recipeRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
+    private final RecipeRepository recipeRepository;
+    private final RoleRepository roleRepository;
 
     public String emailFromJwt(HttpServletRequest token){
         String authHeader = token.getHeader("Authorization");
