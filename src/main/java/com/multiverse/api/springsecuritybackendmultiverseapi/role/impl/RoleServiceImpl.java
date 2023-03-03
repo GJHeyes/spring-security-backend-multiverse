@@ -21,10 +21,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
-
     private final RoleRepository roleRepository;
-    private Extract extract;
-    private UserRepository userRepository; //caps is the class lower case is the instance
+    private final Extract extract;
+    private final UserRepository userRepository; //caps is the class lower case is the instance
     @Override
     public ResponseEntity<List<Role>> getAllRoles(HttpServletRequest token) throws CustomError{
         User user = userRepository.findByEmail(extract.emailFromJwt(token)).orElseThrow(()->new CustomError("User not found"));
@@ -55,7 +54,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public String deleteRole(int roleId) throws CustomError {
         Role role = roleRepository.findById(roleId).orElseThrow(()->new CustomError("Role not found"));
-        roleRepository.deleteById(roleId);
+        roleRepository.delete(role);
         return "Role deleted";
     }
 }
