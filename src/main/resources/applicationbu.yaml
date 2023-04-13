@@ -14,5 +14,6 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
 
+
 secret:
   key: 34753778214125442A472D4B6150645367566B59703273357638792F423F4528
